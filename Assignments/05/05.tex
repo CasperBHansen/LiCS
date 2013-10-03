@@ -1,0 +1,98 @@
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage{a4wide}
+\usepackage{amsmath,amssymb}
+\usepackage{boxproof}
+\usepackage{daymonthyear}
+\usepackage{float} % for the H placement identifier
+\usepackage{stmaryrd}
+
+%===== SETTINGS =====%
+
+\def\meta#1{\mbox{$\langle\hbox{#1}\rangle$}}
+\def\macrowitharg#1#2{{\tt\string#1\bra\meta{#2}\ket}}
+
+{\escapechar-1 \xdef\bra{\string\{}\xdef\ket{\string\}}}
+
+\def\intro#1{{#1}{\cal I}}
+\def\elim#1{{#1}{\cal E}}
+
+\showboxbreadth 999
+\showboxdepth 999
+\tracingoutput 1
+
+\let\imp\to
+\def\elim#1{{{#1}{\cal E}}}
+\def\intro#1{{{#1}{\cal I}}}
+\def\lt{<}
+\def\eqdef{\overset{\mathrm{def}}{=\joinrel=}}
+\def\eps{\mathrel{\epsilon}}
+\def\biimplies{\leftrightarrow}
+\def\flt#1{\mathrel{{#1}^\flat}}
+\def\setof#1{{\left\{{#1}\right\}}}
+\let\implies\to
+\def\KK{{\mathsf K}}
+\let\squashmuskip\relax
+
+%===== META DATA =====%
+
+\title
+{
+{\Large Logic in Computer Science}\\
+Assignment 5
+}
+\author
+{
+	Casper B. Hansen\\
+	University of Copenhagen\\
+	Department of Computer Science\\
+	{\tt fvx507@alumni.ku.dk}
+}
+\date{\today}
+
+%===== DOCUMENT =====%
+
+\begin{document}
+
+\maketitle
+
+\section*{3.4.7 \mdseries Let ${\cal M} = (S,\imp,L)$ be any model for CTL and
+let $\llbracket\phi\rrbracket$ denote the set of all $s \in S$ such that
+${\cal M}, s \models \phi$. Prove the following set identities by inspecting
+the clauses of Definition 3.15 from page 211.}
+% 3.4: 7 (d-f)
+
+\subsection*{(d) \mdseries $\llbracket\phi_1 \land \phi_2\rrbracket =
+\llbracket\phi_1\rrbracket\cap\llbracket\phi_2\rrbracket$}
+...
+
+\subsection*{(e) \mdseries $\llbracket\phi_1 \lor \phi_2\rrbracket =
+\llbracket\phi_1\rrbracket\cup\llbracket\phi_2\rrbracket$}
+...
+
+\subsection*{(f) \mdseries $\llbracket\phi_1 \imp \phi_2\rrbracket =
+(S - \llbracket\phi_1\rrbracket)\cup\llbracket\phi_2\rrbracket$}
+...
+
+\section*{3.4.10 \mdseries Which of the following pairs of CTL formulas are
+equivalent? For those which are not, exhibit a model of one of the pair which
+is not a model of the other}
+% 3.4: 10 (a-c)
+
+\subsection*{(a) \mdseries $\text{EF}{\ }\phi$ and $\text{EG}{\ }\phi$}
+...
+
+\subsection*{(b) \mdseries $\text{EF}{\ }\phi \lor \text{EF}{\ }\psi$ and
+$\text{EF}{\ }(\phi \lor \psi)$}
+...
+
+\subsection*{(c) \mdseries $\text{AF}{\ }\phi \lor \text{AF}{\ }\psi$ and
+$\text{AF}{\ }(\phi \lor \psi)$}
+...
+
+\section*{NuSMV \mdseries Attached assignment}
+% attached NuSMV assignment.
+...
+
+\end{document}

@@ -1,0 +1,294 @@
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage{a4wide}
+\usepackage{amsmath,amssymb}
+\usepackage{boxproof}
+\usepackage{daymonthyear}
+
+%===== SETTINGS =====%
+
+\def\meta#1{\mbox{$\langle\hbox{#1}\rangle$}}
+\def\macrowitharg#1#2{{\tt\string#1\bra\meta{#2}\ket}}
+
+{\escapechar-1 \xdef\bra{\string\{}\xdef\ket{\string\}}}
+
+\def\intro#1{{#1}{\cal I}}
+\def\elim#1{{#1}{\cal E}}
+
+\showboxbreadth 999
+\showboxdepth 999
+\tracingoutput 1
+
+\let\imp\to
+\def\elim#1{{{#1}{\cal E}}}
+\def\intro#1{{{#1}{\cal I}}}
+\def\lt{<}
+\def\eqdef{=}
+\def\eps{\mathrel{\epsilon}}
+\def\biimplies{\leftrightarrow}
+\def\flt#1{\mathrel{{#1}^\flat}}
+\def\setof#1{{\left\{{#1}\right\}}}
+\let\implies\to
+\def\KK{{\mathsf K}}
+\let\squashmuskip\relax
+
+%===== META DATA =====%
+
+\title
+{
+{\Large Logic in Computer Science}\\
+Assignment 1
+}
+\author
+{
+	Casper B. Hansen\\
+	University of Copenhagen\\
+	Department of Computer Science\\
+	{\tt fvx507@alumni.ku.dk}
+}
+\date{\today}
+
+%===== DOCUMENT =====%
+
+\begin{document}
+
+\maketitle
+
+\section*{1.1.1 \mdseries Use $\neg$, $\implies$, $\land$ and $\lor$ to express the following declarative sentences in propositional logic; in each case state what your respective propositional atoms (ie. $p$, $q$, etc.) mean.}
+
+\subsection*{(e) \mdseries Cancer will not be cured unless its cause is determined and a new drug for cancer is found.}
+
+Let the following variables on the left-hand side denote the expression on the right-hand side of it.
+\begin{align*}
+	p \quad &\text{Cancer will be cured.} \\
+	q \quad &\text{Cause of cancer determined} \\
+	r \quad &\text{A new drug is found}
+\end{align*}
+
+Then the compound expression is given by
+\begin{align*}
+	\neg p \implies \neg q \land \neg r
+%	\quad
+%	\text{or the equivalent}
+%	\quad
+%	q \land r \implies p
+\end{align*}
+% which basically states that not having cured cancer implies that the conditions have yet to be fulfilled.
+
+\subsection*{(h) \mdseries Today it will rain or shine, but not both.}
+
+Let the following variables on the left-hand side denote the expression on the right-hand side of it.
+\begin{align*}
+	p \quad \text{It will rain.} \\
+	q \quad \text{It will shine.}
+\end{align*}
+
+Then the compound expression is given by
+\begin{align*}
+	(p \lor q) \land \neg (p \land q)
+\end{align*}
+making it an {\it exclusive-or} statement.
+
+
+\section*{1.2.1 \mdseries Prove the validity of the following sequents.}
+
+\subsection*{(b) \mdseries $p \land q \vdash q \land p$}
+\begin{proofbox}
+	\lbl{1} \: p \land q 				\=\mbox{premise} \\
+	\lbl{2} \: p 						\=\elim\land_1(\ref{1}) \\
+	\lbl{3} \: q 						\=\elim\land_2(\ref{1}) \\
+	\lbl{4} \: q \land p 				\=\intro\land(\ref{2},\ref{3})
+\end{proofbox}
+
+\subsection*{(g) \mdseries $p \vdash q \implies (p \land q)$}
+\begin{proofbox}
+	\lbl{1} \: p 						\=\mbox{premise} \\
+	\[
+	\lbl{2} \: q 						\=\mbox{assumption} \\
+	\lbl{4} \: p \land q 				\=\intro\land(\ref{1},\ref{2}) \\
+	\]
+	\lbl{5} \: q \imp (p \land q)		\=\intro\imp(2-4)
+\end{proofbox}
+
+\subsection*{(j) \mdseries $q \implies r \vdash (p \implies q) \implies (p \implies r)$}
+\begin{proofbox}
+	\lbl{1} \: q \imp r 					\=\mbox{premise} \\
+	\[
+	\lbl{2} \: p \imp q 					\=\mbox{assumption} \\
+	\[
+	\lbl{3} \: p 							\=\mbox{assumption} \\
+	\lbl{4} \: q 							\=\elim\imp(\ref{2}, \ref{3}) \\
+	\lbl{5} \: r 							\=\elim\imp(\ref{1}, \ref{4}) \\
+	\]
+	\lbl{6} \: p \imp r 					\=\intro\imp(3-5) \\
+	\]
+	\lbl{7} \: (p \imp q) \imp (p \imp r)	\=\intro\imp(2-6) \\
+\end{proofbox}
+
+\subsection*{(l) \mdseries $p \implies q, r \implies s \vdash p \lor r \implies q \lor s$}
+\begin{proofbox}
+	\lbl{1} \: p \imp q 					\=\mbox{premise} \\
+	\lbl{2} \: r \imp s 					\=\mbox{premise} \\
+	\[
+	\lbl{3} \: p \lor r 					\=\mbox{assumption} \\
+	\[
+	\lbl{4} \: p 							\=\mbox{assumption} \\
+	\lbl{5} \: q 							\=\elim\imp(\ref{1}, \ref{4}) \\
+	\lbl{6} \: q \lor s 					\=\intro\lor(\ref{3}, \ref{4}) \\
+	\]
+	\[
+	\lbl{7} \: r 							\=\mbox{assumption} \\
+	\lbl{8} \: s 							\=\elim\imp(\ref{2}, \ref{7}) \\
+	\lbl{9} \: q \lor s 					\=\intro\lor(\ref{3}, \ref{7}) \\
+	\]
+	\lbl{10} \: q \lor s 					\=\elim\lor(\ref{3}, 4-6, 7-9) \\
+	\]
+	\lbl{11} \: p \lor r \imp q \lor s 		\=\intro\imp(3-10) \\
+\end{proofbox}
+
+
+\section*{1.2.3 \mdseries Prove the validity of the sequents below.}
+
+\subsection*{(c) \mdseries $p \lor q, \neg q \vdash p$}
+\begin{proofbox}
+	\lbl{1} \: p \lor q 					\=\mbox{premise} \\
+	\lbl{2} \: \neg q 						\=\mbox{premise} \\
+	\[
+	\lbl{3} \: p 							\=\mbox{assumption} \\
+	\]
+	\[
+	\lbl{4} \: q 							\=\mbox{assumption} \\
+	\lbl{5} \: \bot 						\=\elim\neg(\ref{2}, \ref{5}) \\
+	\lbl{6} \: p 							\=\elim\bot(\ref{6}) \\
+	\]
+	\lbl{7} \: p 							\=\elim\lor(\ref{1},3-3,4-6) \\
+\end{proofbox}
+
+\newpage
+\section*{1.2.5 \mdseries Prove the following theorems of propositional logic.}
+
+\subsection*{(a) \mdseries $( (p \imp q) \imp q) \imp ((q \imp p) \imp p)$}
+\begin{proofbox}
+	\[
+	\lbl{1} \: (p \imp q) \imp q							\=\mbox{assumption} \\
+	\[
+	\lbl{2} \: q \imp p										\=\mbox{assumption} \\
+	\[
+	\lbl{3} \: q											\=\mbox{assumption} \\
+	\[
+	\lbl{4} \: \neg p										\=\mbox{assumption} \\
+	\lbl{5} \: p 											\=\elim\imp(\ref{2}, \ref{3}) \\
+	\lbl{6} \: \bot 										\=\elim\neg(\ref{4}, \ref{5}) \\
+	\]
+	\lbl{7} \: \neg\neg p									\=\intro\neg(4-6) \\
+	\]
+	\lbl{9} \: p											\=\intro{\neg\neg}(3-7) \\
+	\]
+	\lbl{10} \: (q \imp p) \imp p							\=\intro\imp(2-8) \\
+	\]
+	\lbl{11} \: ((p \imp q) \imp q) \imp ((q \imp p) \imp p)	\=\intro\imp(1-9) \\
+\end{proofbox}
+
+\section*{1.4.6 \mdseries Let $\star$ be a new logical connective such that $p \star q$ does not hold iff $p$ and $q$ are either both false or both true}
+
+\subsection*{(a \& b) \mdseries Write down the truth table for $p \star q$ and $(p \star p) \star (q \star q)$}
+\begin{center}
+	\begin{tabular}{|c|c|c|c|c|c|}
+		\hline
+		$p$ & $q$ & $p \star q$ & $p \star p$ & $q \star q$ & $(p \star p) \star (q \star q)$ \\ \hline
+		{\tt F} & {\tt F} & {\tt F} & {\tt F} & {\tt F} & {\tt F} \\ \hline
+		{\tt F} & {\tt T} & {\tt T} & {\tt F} & {\tt F} & {\tt F} \\ \hline
+		{\tt T} & {\tt F} & {\tt T} & {\tt F} & {\tt F} & {\tt F} \\ \hline
+		{\tt T} & {\tt T} & {\tt F} & {\tt F} & {\tt F} & {\tt F} \\ \hline
+	\end{tabular}
+\end{center}
+
+\subsection*{(c) \mdseries Does the table in (b) coincide with a table in Figure 1.6 (page 38)? If so, which one?}
+The contradiction ($\bot$) table.
+
+\subsection*{(d) \mdseries Do you know $\star$ already as a logic gate in circuit design? If so, what is it called?}
+Yes, it's called an {\bf XOR}-gate (in logic $\oplus$, pronounced {\it exclusive-or}).
+
+\section*{1.4.12 \mdseries Show that the following sequents are not valid by finding a valuation in which the truth values of the formulas to the left of $\vdash$ are {\tt T} and the truth value of the formula to the right of $\vdash$ is {\tt F}.}
+
+\subsection*{(c) \mdseries $p \imp (q \imp r) \vdash p \imp (r \imp q)$}
+When we list the possible valuations
+\begin{center}
+	\begin{tabular}{|c|c|c|c|c|c|}
+		\hline
+		$p$ & $q$ & $r$ & $p \imp (q \imp r)$ & $p \imp (r \imp q)$ & $p \imp (q \imp r) \vdash p \imp (r \imp q)$ \\ \hline
+		{\tt F} & {\tt F} & {\tt F} & {\tt F} & {\tt F} & {\tt F} \\ \hline
+		{\tt F} & {\tt F} & {\tt T} & {\tt T} & {\tt F} & {\tt T} \\ \hline
+		{\tt F} & {\tt T} & {\tt F} & {\tt T} & {\tt T} & {\tt F} \\ \hline
+		{\tt F} & {\tt T} & {\tt T} & {\tt F} & {\tt F} & {\tt F} \\ \hline
+		{\tt T} & {\tt F} & {\tt F} & {\tt T} & {\tt T} & {\tt F} \\ \hline
+		{\tt T} & {\tt F} & {\tt T} & {\tt F} & {\tt F} & {\tt F} \\ \hline
+		{\tt T} & {\tt T} & {\tt F} & {\tt F} & {\tt F} & {\tt F} \\ \hline
+		{\tt T} & {\tt T} & {\tt T} & {\tt T} & {\tt T} & {\tt F} \\ \hline
+	\end{tabular}
+\end{center}
+we see that only when the valuation of $p$ and $q$ are {\tt F} and $r$ is {\tt T} we get the desired result.
+
+\section*{1.4.13 \mdseries For each of the following invalid sequents, give examples of natural language declarative sentences for the atoms $p$, $q$ and $r$ such that the premises are true, but the conclusion false.}
+
+\subsection*{(b) \mdseries $\neg p \imp \neg q \vdash \neg q \imp \neg p$}
+
+Let the following variables on the left-hand side denote the expression on the right-hand side of it.
+\begin{align*}
+	p \quad &\text{You are European} \\
+	q \quad &\text{You are Danish}
+\end{align*}
+
+Then the premise becomes {\it if you are not European, then you are not Danish}, which is true. The conclusion, however, is not, since it becomes {\it if you are not Danish, then you are not European}.
+
+\section*{Additional exercises}
+
+\subsection*{Prove soundness for the four derived rules at the bottom of Figure 1.2 (page 27),  following the proof strategy as used for the basic rules  (i.e., it is not acceptable simply to say that the derived rules are sound because they are defined in terms of sound rules). Also, you should follow the proof strategy and style illustrated for and-I, not-E, etc. in the lecture, rather than the book. Addendum: You may also use the strategy and style illustrated in the supplementary notes.}
+It suffices ---by the induction hypothesis in supplementary notes--- to show that for all valuations where the premises $\Phi$ are true, so is its conclusion $\psi$.
+
+\subsubsection*{For modus tollens $\frac{\phi \imp \psi \quad \neg \psi}{\neg \phi}\text{\tt MT}$}
+\begin{center}
+	\begin{tabular}{c||c||c}
+		$\phi \imp \psi$ & $\neg\psi$ & $\neg\phi$ \\ \hline
+		{\tt T} & {\tt T} & {\tt T}
+	\end{tabular}
+\end{center}
+The implication preserves truth and must therefore be true, this eliminates looking at the table entry where $\phi$ is {\tt T} and $\psi$ is {\tt F}, which yields that the implication is false. Moreover, since $\psi$ must be {\tt F}, the only table entry left is the one shown above. Hence $\phi \imp \psi, \neg \psi \models \neg \phi$, and thereby, the modus tollens rule is sound.
+
+\subsubsection*{For the double-negation introduction $\frac{\phi}{\neg\neg\phi}\intro{\neg\neg}$}
+\begin{center}
+	\begin{tabular}{c||c}
+		$\phi$ & $\neg\neg\phi$ \\ \hline
+		{\tt T} & {\tt T}
+	\end{tabular}
+\end{center}
+In the case of double-negation, which has simply two table entries, we need only exclude the one which doesn't have true premises, leaving us simply one. And by the valuation above, we see that $\phi \models \neg\neg\phi$.
+
+\subsubsection*
+{
+	For the proof by contradiction ({\tt PBC})
+	$\frac{
+	\begin{proofbox}
+	\[
+		\: \neg\phi \\
+		\: \dots \\
+		\: \bot
+	\]
+	\end{proofbox}
+	}{\phi}\text{\tt PBC}$
+}
+
+Since a contradiction always yields {\tt F}, we must therefore assume its initial assumption $\neg\phi$ to be {\tt F} as well. Let $\Phi$ such a sequence of formulae that leads to the contradictory statement. Then we have that $\Phi \models \phi$, and hence $\neg\phi, \bot \models \phi$.
+
+\subsubsection*{For the law of excluded middle ({\tt LEM}) $\frac{}{\phi \lor \neg\phi}\text{\tt LEM}$}
+\begin{center}
+	\begin{tabular}{c||c||c}
+		$\phi$ & $\neg\phi$ & $\phi \lor \neg\phi$ \\ \hline
+		{\tt F} & {\tt T} & {\tt T} \\
+		{\tt T} & {\tt F} & {\tt T}
+	\end{tabular}
+\end{center}
+As the rule is based on the fact that no matter what the case is of $\phi$ the statement is always true, we must list the table in its entirety, which showcases both of these circumstances.
+
+\end{document}

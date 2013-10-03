@@ -1,0 +1,354 @@
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage{a4wide}
+\usepackage{amsmath,amssymb}
+\usepackage{boxproof}
+\usepackage{daymonthyear}
+\usepackage{float} % for the H placement identifier
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{tabu}
+\usepackage{xcolor}
+
+%===== SETTINGS =====%
+
+\def\meta#1{\mbox{$\langle\hbox{#1}\rangle$}}
+\def\macrowitharg#1#2{{\tt\string#1\bra\meta{#2}\ket}}
+
+{\escapechar-1 \xdef\bra{\string\{}\xdef\ket{\string\}}}
+
+\def\intro#1{{#1}{\cal I}}
+\def\elim#1{{#1}{\cal E}}
+
+\showboxbreadth 999
+\showboxdepth 999
+\tracingoutput 1
+
+\let\imp\to
+\def\elim#1{{{#1}{\cal E}}}
+\def\intro#1{{{#1}{\cal I}}}
+\def\lt{<}
+\def\eqdef{\overset{\mathrm{def}}{=\joinrel=}}
+\def\eps{\mathrel{\epsilon}}
+\def\biimplies{\leftrightarrow}
+\def\flt#1{\mathrel{{#1}^\flat}}
+\def\setof#1{{\left\{{#1}\right\}}}
+\let\implies\to
+\def\KK{{\mathsf K}}
+\let\squashmuskip\relax
+
+%===== META DATA =====%
+
+\title
+{
+{\Large Logic in Computer Science}\\
+Assignment 3
+}
+\author
+{
+	Casper B. Hansen\\
+	University of Copenhagen\\
+	Department of Computer Science\\
+	{\tt fvx507@alumni.ku.dk}
+}
+\date{\today}
+
+%===== DOCUMENT =====%
+
+\begin{document}
+
+\maketitle
+
+\section*{2.2.3 \mdseries Which of the following strings are formulas in
+predicate logic? Specify a reason for failure for strings which aren’t, draw
+parse trees of all strings which are.}
+% For exercise 2.2.3a you do not have to draw the parse trees.
+\subsection*{(a) \mdseries Let $m$ be a constant, $f$ a function symbol with
+one argument and $S$ and $B$ two predicate symbols, each with two arguments:
+\\
+\begin{tabular}{rl}
+	i. & $S(m, x)$ \\
+	ii. & $B(m, f(m))$ \\
+	iii. & $f(m)$ \\
+	iv. & $B(B(m, x), y)$ \\
+	v. & $S(B(m), z)$ \\
+	vi. & $(B(x, y) \imp (\exists z{\ }S(z,y)))$ \\
+	vii. & $(S(x,y) \imp S(y, f(f(x))))$ \\
+	viii. & $(B(x) \imp B(B(x))$ \\
+\end{tabular}
+}
+The first {\it i} and second {\it ii} are formulae, as both $S$ and $B$ has
+arity 2, and is supplied with two arguments; namely the variable $x$ and the
+constant $m$. For the second argument this is just a unary function, which is
+valid for reasons given in {\it iii}.
+
+The third {\it iii} is a term, but {\it not} a formula. The fourth {\it iv} is
+{\it not} a formula as the outer $B$ is supplied with a predicate, rather than
+a term.
+
+The fifth {\it v} is {\it not} a formula, as them arguments supplied does not
+match the arity of $B$. The sixth {\it vi} is a formula, as the left-hand side
+of the implication is valid for the same reasons as given for {\it i}, and the
+existence declaration does not change the fact that the right-hand side is
+valid.
+
+The seventh {\it vii} is a formula; the left-hand side is valid for the same
+reason as that of {\it i}, the right-hand side will evaluate the inner $f$,
+which in turn supplies still just one argument to the outer $f$, and then, for
+the exact same reason as the left-hand side, so is the right-hand side valid.
+The implication is valid because the both sides of it are valid formulae.
+
+The eighth, and last, {\it viii} is {\it not} a formula, as it violates the
+arity of $B$.
+
+\section*{2.2.4 \mdseries Let $\phi$ be $\exists x(P(y,z) \land
+(\forall y(\neg Q(y,x) \lor P(y,z))))$, where $P$ and $Q$ are predicate
+symbols with two arguments.}
+% 4cd you should use the unsafe substitution (Definition 2.7 in H+R, p.105),
+% not the safe one from the lectures.
+\subsection*{(c) \mdseries Is there a variable in $\phi$ which has free and
+bound occurrences?}
+Yes. The variable $y$ is free in the scope of $\exists x \phi$, whereas it is
+bound under the scope of $\forall y \phi$.
+
+\subsection*{(d) \mdseries Consider the terms $w$ ($w$ is a variable), $f(x)$
+and $g(y,z)$, where $f$ and $g$ are function symbols with arity $1$ and $2$,
+respectively.
+\\
+\begin{tabular}{rl}
+	i. & Compute $\phi[w/x]$, $\phi[w/y]$, $\phi[f(x)/y]$ and $\phi[g(y,z)/z]$. \\
+	ii. & Which of $w$, $f(x)$ and $g(y,z)$ are free for $x$ in $\phi$? \\
+	iii. & Which of $w$, $f(x)$ and $g(y,z)$ are free for $y$ in $\phi$?
+\end{tabular}
+}
+For $\phi[w/x]$ we have no free $x$ in our formula, and hence the formula
+doesn't change at all.
+\begin{align*}
+	\phi[w/x] &= \exists x(P(y,z) \land (\forall y(\neg Q(y,x) \lor P(y,z))))
+\end{align*}
+In $\phi[w/y]$ however, we have one free $y$ on the left-hand side of the upper
+conjunction, and so we replace this $y$ with the variable $w$.
+\begin{align*}
+	\phi[w/y] &= \exists x(P(w,z) \land (\forall y(\neg Q(y,x) \lor P(y,z))))
+\end{align*}
+We notice a problem with $\phi[f(x)/y]$, as we replace the $y$ by $f(x)$,
+since $x$ is bound under the scope. But the assignment explicitly tells us to
+use the {\it unsafe} substitution method (by definition 2.7), and so we simply
+ignore the problem and perform the substitution.
+\begin{align*}
+	\phi[f(x)/y] &= \exists x(P(f(x),z) \land (\forall y(\neg Q(y,x) \lor P(y,z))))
+\end{align*}
+For $\phi[g(y,z)/z]$ both occurences of $z$ are free, and as such, we can
+simply replace them. Yet again, there is a problem with $y$ being bound, but
+we can ignore this since we are employing the {\it unsafe} substitution method.
+\begin{align*}
+	\phi[g(y,z)/z] &= \exists x(P(y,g(y,z)) \land (\forall y(\neg Q(y,x) \lor P(y,g(y,z)))))
+\end{align*}
+
+No bindings on $w$ exists in $\phi$, and therefore $w$ is free for both $x$
+and $y$. For $f(x)$, since there is a binding on $x$ at the root, that is, the
+entire scope of the formula, $f(x)$ isn't free for any substitution, including
+$x$ and $y$. Since no bindings are present in $\phi$ on $z$ we can disregard
+it when considering whether or not $g(y,z)$ is free for some variable, but we
+do have to consider the $y$; on the right-hand side of the upper most
+conjunction we have a binding of $y$ in its scope, and a leaf $y$, and so
+$g(y,z)$ is not free for $y$. The case of $g(y,z)$ being free for $x$ is the
+same argument, by replacing $y$ with $x$, as we also have a leaf of $x$ in
+that subtree.
+
+% For exercises 2.3 1a 7c 9al formal errors will not be tolerated.
+% For this reason we strongly encourage you to use ProofWeb to generate
+% and/or verify your proofs.
+
+\newpage
+\section*{2.3.1 \mdseries Prove the validity of the following sequents using,
+among others, the rules $\intro=$ and $\elim=$. Make sure that you indicate
+for each application of $\elim=$ what the rule instances $\phi$, $t_1$ and
+$t_2$ are.}
+% Formal errors not tolerated!
+
+\subsection*{(a) \mdseries $(y = 0) \land (y = x) \vdash 0 = x$}
+\begin{proofbox}
+	\lbl{1}	\: (y = 0) \land (y = x)			\=\mbox{premise} \\
+	\lbl{2}	\: y = 0							\=\elim\land(\ref{1}) \\
+	\lbl{3}	\: y = x							\=\elim\land(\ref{1}) \\
+	\lbl{4}	\: x = 0							\=\elim=(1,2) \\
+	% not sure if this these next steps are necessary
+	\lbl{5}	\: x = x							\=\intro= \\
+	\lbl{6}	\: 0 = x							\=\elim=(4,5) \\
+\end{proofbox}
+
+\section*{2.3.7 \mdseries The sequents below look a bit tedious, but in
+proving their validity you make sure that you really understand how to nest
+the proof rules.}
+% Formal errors not tolerated!
+
+\subsection*{(c) \mdseries $\exists x{\ }\forall y{\ }P(x,y) \vdash
+\forall y{\ }\exists x{\ }P(x,y)$}
+\begin{proofbox}
+	\lbl{1} \: \exists x{\ }\forall y{\ }P(x,y)		\=\mbox{premise} \\
+	\[
+y_0	\lbl{2} \: 										\=\mbox{} \\
+	\[
+x_0	\lbl{3} \: \forall y{\ }P(x_0, y)				\=\mbox{assumption} \\
+	\lbl{4} \: P(x_0, y_0)							\=\elim\forall(\ref{3}) \\
+	\lbl{5} \: \exists x{\ }P(x,y_0)				\=\intro\exists(\ref{4}) \\
+	\]
+	\lbl{6} \: \exists x{\ }P(x,y_0)				\=\elim\exists(\ref{1}, 3-5) \\
+	\]
+	\lbl{7} \: \forall y{\ }\exists x{\ }P(x,y)		\=\intro\forall(2-6) \\
+\end{proofbox}
+
+\newpage
+\section*{2.3.9 \mdseries Prove the validity of the following sequents in
+predicate logic, where $F$, $G$, $P$, and $Q$ have arity $1$, and $S$ has
+arity $0$ (a ‘propositional atom’).}
+% Formal errors not tolerated!
+
+\subsection*{(a) \mdseries $\exists x{\ }(S \imp Q(x)) \vdash S \imp
+\exists x{\ }Q(x)$}
+\begin{proofbox}
+	\lbl{1}	\: \exists x{\ }(S \imp Q(x))			\=\mbox{premise} \\
+	\[
+	\lbl{2}	\: S									\=\mbox{assumption} \\
+	\[
+x_0	\lbl{3}	\: S \imp Q(x_0)						\=\mbox{assumption} \\
+	\lbl{4}	\: Q(x_0)								\=\elim\imp(\ref{3}) \\
+	\lbl{5}	\: \exists Q(x)							\=\intro\exists(\ref{4}) \\
+	\]
+	\lbl{6}	\: \exists Q(x)							\=\elim\exists(1, 3-5) \\
+	\]
+	\lbl{7}	\: S \imp \exists x{\ }Q(x)				\=\intro\imp(2-6) \\
+\end{proofbox}
+
+\subsection*{(l) \mdseries $\forall x{\ }P(x) \lor \forall x{\ }Q(x)
+\vdash \forall x{\ }(P(x) \lor Q(x))$}
+\begin{proofbox}
+	\lbl{1}	\: \forall x{\ }P(x) \lor \forall x{\ }Q(x)		\=\mbox{premise} \\
+	\[
+x_0	\lbl{2} \: \mbox{}										\=\mbox{} \\
+	\(
+	\lbl{3}	\: \forall P(x)									\=\mbox{assumption} \\
+	\lbl{4}	\: P(x_0)										\=\elim\forall(\ref{1}) \\
+	\lbl{5}	\: P(x_0) \lor Q(x_0)							\=\intro\lor(\ref{4}) \\
+	\*
+	\lbl{3}	\: \forall Q(x)									\=\mbox{assumption} \\
+	\lbl{4}	\: Q(x_0)										\=\elim\forall(\ref{1}) \\
+	\lbl{5}	\: P(x_0) \lor Q(x_0)							\=\intro\lor(\ref{4}) \\
+	\)
+	\lbl{6} \: P(x_0) \lor Q(x_0)							\=\elim\lor(\ref{1}, 3-5) \\
+	\]
+	\lbl{7}	\: \forall x{\ }( P(x) \lor Q(x) )				\=\intro\forall(2-6) \\
+\end{proofbox}
+
+\section*{2.4.5 \mdseries Let $\phi$ be the sentence $\forall x{\ }\forall
+y{\ }\exists z{\ }(R(x, y) \imp R(y, z))$, where $R$ is a predicate symbol
+of two arguments}
+% For exercise 2.4: 5 you need not go into the same excruciating level of
+% detail as for the Erasmus Montanus exercise.
+
+% all
+\subsection*{(a) \mdseries Let $A \eqdef \{a,b,c,d\}$ and $R^{\cal M} \eqdef
+\{(b,c),(b,b),(b,a)\}$. Do we have $\cal M \models \phi$? Justify your answer,
+whatever it is.}
+No, for the simple reason that choosing $R(b,c)$ leaves us with no tubles in
+$R^n$ for the $y$ in the implication --- that is, there exists no such tuble
+which has $c$ as its first argument.
+
+\subsection*{(b) \mdseries Let $A \eqdef \{a,b,c\}$ and $R^{\cal M'} \eqdef
+\{(b,c),(a,b),(c,b)\}$. Do we have $\cal M' \models \phi$? Justify your answer,
+whatever it is.}
+The converse is true for this one, as no matter which tuble we choose, the
+implication still holds, as there are tuples in the set that satisfies the
+right-hand side.
+
+\section*{2.4.8 \mdseries Show the semantic entailment $\forall x{\ }P (x)
+\lor \forall x{\ }Q(x) \models \forall x{\ }(P (x) \lor Q(x))$}
+% a detail level matching that of similar proof from the slides from Monday 16
+% is sufficient.
+For a model $\cal M$ satisfying $\forall x{\ }P (x) \lor \forall x{\ }Q(x)$,
+we must have that ${\cal M} \models \forall x{\ }P (x)$ and ${\cal M} \models
+\forall x{\ }Q(x)$. So all elements of $A$ must be a subset of the union of
+those --- that is, $A \subseteq P^n \cup Q^n$, implying that ${\cal M} \models
+\forall x{\ }(P(x) \lor Q(x))$ holds.
+
+\section*{2.4.10 \mdseries Is $\forall x{\ }(P (x) \lor Q(x)) \models \forall
+x{\ }P(x) \lor \forall x{\ }Q(x)$ a semantic entailment? Justify your answer.}
+% a detail level matching that of similar proof from the slides from Monday 16
+% is sufficient.
+No, because we cannot argue it reasonably. We would need a copy-paste argument
+such as the one given above, but this isn't possible because of its structure.
+
+\newpage
+\section*{Additional exercise \mdseries Structural induction}
+We define the height $h(\phi)$ of a propositional formula $\phi$ as follows.
+\begin{align*}
+	h(\phi) =
+	\begin{cases}
+		0
+		& \mbox{if $\phi = \bot$ or $\phi = p$} \\
+		%
+		1 + h(\phi)
+		& \mbox{if $\phi = \neg \phi$} \\
+		%
+		1 + \text{max}\{h(\phi_1), h(\phi_2)\}
+		& \mbox{if $\phi = \Gamma$}
+	\end{cases}
+\end{align*}
+where $\Gamma$ is any one of the binary logical operations $\land$, $\lor$ or
+$\imp$ on $\phi_1$ and $\phi_2$.
+
+\subsection*{Use structural induction to show that any propositional logic
+formula $\phi$ of height $h$ contains at most $2^h$ propositional atoms. (You
+may argue that some of the cases are similar.)}
+Firstly, let us recognize that propositional atoms for which the first case
+applies doesn't increase the height of the parse tree, as such the proof must
+rely on the structural composition of its logical connectives (ie. $\neg$,
+$\land$, etc.).
+
+In order to show that the height of any formula $\phi$ contains at most $2^h$
+propositional atoms we must define such an instance in which propositional
+atom occurrences is maximized, while minimizing the height of the tree. This
+occurs only when the parse tree mimics a complete binary tree. That is, all
+non-leaf nodes have two children and the last level is filled by leaves.
+
+\begin{description}
+	\item {\bf Inductive hypothesis} Let $L(x)$ and $R(x)$ denote the number
+	of propositional atoms for the left and right subtrees, respectively, of
+	the parse tree rooted at $x$. Then for a fully balanced complete binary
+	(and hence only uses binary logical connectives) parse tree $L(x) = R(x)
+	= 2^{h(x) - 1}$, and thereby $L(x) + R(x) = 2^{h(x)}$.
+	
+	\item {\bf Base case} For the base case, we have that when $\phi$ is a
+	propositional atom the height is left unchanged at $0$, since no
+	subtrees exists, and hence trivially satisfies the hypothesis.
+	
+	\item {\bf Inductive step} Consider a full binary parse tree. For this
+	to be the case it must consist only by binary logical connectives by
+	definition --- that is, any and all logical connective in $\Gamma$ will
+	do. Let $x$ be the root node in any such parse, and let $y$ be that same
+	node, but in a copy of the former parse tree in which we replace each
+	propositional atom by a binary logical connective, and further let its
+	two arguments be propositional atoms.
+
+	We then have that $L(x) = 2^{h(x) - 1}$ and $L(y) = 2^{h(y) - 1}$.
+
+	Since we added a level to the height of the tree rooted at $x$, we
+	can express it as follows
+	\begin{align*}
+		L(x) &= 2 \cdot 2^{h(x) - 1} = 2^{h(x)} = 2^{h(y) - 1} = L(y)
+	\end{align*}
+	We see that it is exactly $L(y)$ from which the inductive hypothesis
+	follows.
+\end{description}
+
+\subsection*{Use structural induction to show that if $\phi$ contains the
+connective $\neg$ anywhere, then $\phi$ contains strictly less than $2^h$
+propositional atoms. (Hint: use the result from 1.)}
+Suppose there is a complete binary parse tree, where the number of leaves
+equal $2^h$, where one of the logical connectives is a $\neg$. Then replacing
+it by a binary connective would make it possible to have $2^h + 1$ atoms for
+a formula $\phi$, which is a contradiction to the former proof.
+
+\end{document}

@@ -1,0 +1,250 @@
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage{a4wide}
+\usepackage{pdflscape}
+\usepackage{amsmath,amssymb}
+\usepackage{boxproof}
+\usepackage{daymonthyear}
+\usepackage{float} % for the H placement identifier
+\usepackage{graphicx}
+%\usepackage{rotating}
+
+\usepackage{tikz}
+\usepackage{tabu}
+\usepackage{xcolor}
+
+%===== SETTINGS =====%
+
+\def\meta#1{\mbox{$\langle\hbox{#1}\rangle$}}
+\def\macrowitharg#1#2{{\tt\string#1\bra\meta{#2}\ket}}
+
+{\escapechar-1 \xdef\bra{\string\{}\xdef\ket{\string\}}}
+
+\def\intro#1{{#1}{\cal I}}
+\def\elim#1{{#1}{\cal E}}
+
+\showboxbreadth 999
+\showboxdepth 999
+\tracingoutput 1
+
+\let\imp\to
+\def\elim#1{{{#1}{\cal E}}}
+\def\intro#1{{{#1}{\cal I}}}
+\def\lt{<}
+\def\eqdef{\overset{\mathrm{def}}{=\joinrel=}}
+\def\eps{\mathrel{\epsilon}}
+\def\biimplies{\leftrightarrow}
+\def\flt#1{\mathrel{{#1}^\flat}}
+\def\setof#1{{\left\{{#1}\right\}}}
+\let\implies\to
+\def\KK{{\mathsf K}}
+\let\squashmuskip\relax
+
+%===== META DATA =====%
+
+\title
+{
+{\Large Logic in Computer Science}\\
+Assignment 4
+}
+\author
+{
+	Casper B. Hansen\\
+	University of Copenhagen\\
+	Department of Computer Science\\
+	{\tt fvx507@alumni.ku.dk}
+}
+\date{\today}
+
+%===== DOCUMENT =====%
+
+\begin{document}
+
+\maketitle
+
+% Note that for 3.2: 2, parts (i,ii) must be answered for each of (a-e).
+% Also, in the model shown in Fig. 3.39, an overlined atom in a state denotes
+% that the atom is false for that particular state.
+
+\section*{3.2.2 \mdseries Consider the system of Figure 3.39. For each of the
+formulas $\phi$ find a path from the initial state $q_3$ which satisfies
+$\phi$ and determine whether $\cal M$, $q_3 \models \phi$}
+
+\subsection*{(a) \mdseries $G{\ }a$}
+(i) An infinite path which satisfies $\phi$ is $q_3 \imp q_4 \imp q_3 \imp
+\dots$. (ii) We do not have that $\cal M$, $q_3 \models G{\ }a$, as $a$ must
+hold for all states reachable from the $q_3$ state, and it only holds for
+$q_4$, not the two other reachable states; $q_1$ and $q_2$.
+
+\subsection*{(b) \mdseries $a{\ }U{\ }b$}
+(i) There is a path which satisfies $\phi$; $q_3 \imp q_2$. (ii) But we do
+not have that $\cal M$, $q_3 \models a{\ }U{\ }b$, since it is the only path
+for which $a{\ }U{\ }b$ is satisfied.
+
+\subsection*{(c) \mdseries $a{\ }U{\ }X{\ }(a \land \neg b)$}
+(i) Holds only for the infinite path $q_3 \imp q_4 \imp q_3 \imp \dots$, as
+from the next of $q_4$ is the only path which satisfies $a \land \neg b$. (ii)
+Therefore we do not have that $\cal M$, $q_3 \models a{\ }U{\ }X{\ }(a \land
+\neg b)$
+
+\subsection*{(d) \mdseries $X{\ }\neg b \land G(\neg a \lor \neg b)$}
+(i) The infinite path $q_3 \imp q_1 \imp q_2 \imp q_3 \imp \dots$ satisfies
+$X{\ }\neg b \land G(\neg a \lor \neg b)$, (ii) but as we can never get to
+$q_4$ we do not have that $\cal M$, $q_3 \models X{\ }\neg b \land G(\neg a
+\lor \neg b)$.
+
+\subsection*{(e) \mdseries $X{\ }(a \land b) \land F(\neg a \land \neg b)$}
+(i) We can satisfy $X{\ }(a \land b) \land F(\neg a \land \neg b)$ by the path
+$q_3 \imp q_4$, but we cannot get anywhere else, as $X{\ }(a \land b)$ isn't
+satisfied from $q_4$. (ii) As such, neither do we have that $\cal M$, $q_3
+\models X{\ }(a \land b) \land F(\neg a \land \neg b)$.
+
+\section*{3.2.7 \mdseries Prove that for all paths $\pi$ of all models,
+$\pi \models \phi W \psi \land F \psi$ implies
+$\pi \models \phi{\ }U{\ }\psi$. That is, prove the remaining half of
+equivalence (3.2) on page 185.}
+Under the assumption that $\pi \models \phi W \psi \land F \psi$, then
+looking to definition 3.6 in the textbook we see that in order to show
+satisfaction of $\pi \models \phi{\ }U{\ }\psi$, by clause $11$ we must first
+show that $\pi^i \models \psi$ for $i \geq 1$. We see that by clause $10$, we
+have that $\pi \models F{\ }\psi$, showing exactly that. Furthermore, by
+clause $11$ it remains to be shown that $\pi^j \models \phi$ holds for all
+$j = 1, \dots, i-1$. By clause $12$ we get exactly that, which by clause $11$
+shows that all the conditions for $\pi \models \phi{\ }U{\ }\psi$ has been
+fulfilled, proving that $\pi \models \phi W \psi \land F \psi$ implies
+$\pi \models \phi{\ }U{\ }\psi$.
+
+\section*{Additional exercise \mdseries Post's Correspondence Problem}
+
+\subsection*{Exercise 2 \mdseries Consider the PCP instance $C = ((001, 0),
+(01, 011), (01, 101), (10, 001))$. Construct the corresponding predicate logic
+formula $\psi$. That is, write down the explicit predicate logic formula $\psi
+= \phi_1 \land \phi_2 \imp \exists z{\ }P(z, z)$ as per Huth+Ryan p. 134. (You
+do not have to prove it.)}
+\begin{align*}
+	\psi \eqdef \phi_1 \land \phi_2 \imp \exists z{\ }P(z, z)
+	\text{, where}
+\end{align*}
+\small
+\begin{align*}
+	\phi_1 &\eqdef \left(
+	P(f_{001}(e),f_{0}(e)) \land
+	P(f_{01}(e),f_{011}(e)) \land
+	P(f_{01}(e),f_{101}(e)) \land
+	P(f_{10}(e),f_{001}(e))
+	\right) \\
+	\phi_2 &\eqdef \forall v \forall w \left( P(v, w) \imp \left(
+	P(f_{001}(v),f_{0}(w)) \land
+	P(f_{01}(v),f_{011}(w)) \land
+	P(f_{01}(v),f_{101}(w)) \land
+	P(f_{10}(v),f_{001}(w))
+	\right)\right)
+\end{align*}
+\normalsize
+
+\begin{landscape}
+\subsection*{Exercise 1 \mdseries By Gödel’s completeness theorem $\models
+\psi$ iff. $\vdash \psi$. Your task is now to construct a proof for $\vdash
+\psi$ directly, using the natural deduction rules for predicate logic. (Hint:
+Show $P(f101110011(e), f101110011(e))$, corresponding to (1, 3, 2, 3).)}
+\scriptsize
+\begin{proofbox}
+	\[
+	\lbl{1}	\:	(
+				P(f_{1}(e),f_{101}(e)) \land
+				P(f_{10}(e),f_{00}(e)) \land
+				P(f_{011}(e),f_{11}(e)))
+				\land \forall v \forall w (P(v, w) \imp (
+				P(f_{1}(v),f_{101}(w)) \land
+				P(f_{10}(v),f_{00}(w)) \land
+				P(f_{011}(v),f_{11}(w))
+				))										\=\mbox{assumption} \\
+	%
+	\lbl{2}	\:	P(f_{1}(e),f_{101}(e)) \land
+				P(f_{10}(e),f_{00}(e)) \land
+				P(f_{011}(e),f_{11}(e))					\=\elim\land_1(\ref{1}) \\
+	%
+	\lbl{3}	\: 	\forall v \forall w (P(v, w) \imp (
+				P(f_{1}(v),f_{101}(w)) \land
+				P(f_{10}(v),f_{00}(w)) \land
+				P(f_{011}(v),f_{11}(w)))				\=\elim\land_2(\ref{1}) \\
+	%
+	\lbl{4}	\:	P(f_{10}(e),f_{00}(e)) \land
+				P(f_{011}(e),f_{11}(e))					\=\elim\land_2(\ref{2}) \\
+	%
+	\lbl{5}	\:	P(f_{1}(e),f_{101}(e))					\=\elim\land_1(\ref{2}) \\
+	%
+	\lbl{6}	\:	\forall w (P(f_{1}(e), w) \imp (
+				P(f_{11}(e)),f_{101}(w)) \land
+				P(f_{110}(e),f_{00}(w)) \land
+				P(f_{1011}(e),f_{11}(w)))				\=\elim\forall_v(\ref{3}) \\
+	%
+	\lbl{7}	\:	\forall w (P(f_{1}(e), f_{101}(e)) \imp (
+				P(f_{11}(e)),f_{101101}(e)) \land
+				P(f_{110}(e),f_{10100}(e)) \land
+				P(f_{1011}(e),f_{10111}(e)))			\=\elim\forall_w(\ref{6}) \\
+	%
+	\lbl{8}\:	P(f_{11}(e)),f_{101101}(e)) \land
+				P(f_{110}(e),f_{10100}(e)) \land
+				P(f_{1011}(e),f_{10111}(e))				\=\elim\imp(\ref{7}, \ref{5}) \\
+	%
+	\lbl{9}\:	P(f_{110}(e),f_{10100}(e)) \land
+				P(f_{1011}(e),f_{10111}(e))				\=\elim\land_2(\ref{8}) \\
+	%
+	\lbl{10}\:	P(f_{1011}(e),f_{10111}(e))				\=\elim\land_2(\ref{9}) \\
+	%
+	\lbl{11}\: 	\forall w (P(f_{1011}(e), w) \imp (
+				P(f_{10111}(e),f_{101}(w)) \land
+				P(f_{101110}(e),f_{00}(w)) \land
+				P(f_{1011011}(e),f_{11}(w)))			\=\elim\forall_v(\ref{3}) \\
+	%
+	\lbl{12}\: 	P(f_{1011}(e), f_{10111}(e)) \imp (
+				P(f_{10111}(e),f_{10111101}(e)) \land
+				P(f_{101110}(e),f_{1011100}(e)) \land
+				P(f_{1011011}(e),f_{1011111}(e))		\=\elim\forall_w(\ref{11}) \\
+	%
+	\lbl{13}\: 	P(f_{10111}(e),f_{10111101}(e)) \land
+				P(f_{101110}(e),f_{1011100}(e)) \land
+				P(f_{1011011}(e),f_{1011111}(e))		\=\elim\imp(\ref{12}, \ref{10}) \\
+	%
+	\lbl{14}\: 	P(f_{101110}(e),f_{1011100}(e)) \land
+				P(f_{1011011}(e),f_{1011111}(e))		\=\elim\land_2(\ref{13}) \\
+	%
+	\lbl{15}\: 	P(f_{101110}(e),f_{1011100}(e))			\=\elim\land_1(\ref{14}) \\
+	%
+	\lbl{16}\: 	\forall w (P(f_{101110}(e), w) \imp (
+				P(f_{1011101}(v),f_{101}(w)) \land
+				P(f_{10111010}(v),f_{00}(w)) \land
+				P(f_{101110011}(v),f_{11}(w)))			\=\elim\forall_v(\ref{3}) \\
+	%
+	\lbl{17}\: 	\forall w (P(f_{101110}(e), f_{1011100}(e)) \imp (
+				P(f_{1011101}(v),f_{1011100101}(e)) \land
+				P(f_{10111010}(v),f_{101110000}(e)) \land
+				P(f_{101110011}(v),f_{101110011}(e)))	\=\elim\forall_w(\ref{16}) \\
+	%
+	\lbl{18}\: 	P(f_{1011101}(v),f_{1011100101}(e)) \land
+				P(f_{10111010}(v),f_{101110000}(e)) \land
+				P(f_{101110011}(v),f_{101110011}(e))	\=\elim\imp(\ref{17}, \ref{15}) \\
+	%
+	\lbl{19}\: 	P(f_{10111010}(v),f_{101110000}(e)) \land
+				P(f_{101110011}(v),f_{101110011}(e))	\=\elim\land_2(\ref{18}) \\
+	%
+	\lbl{20}\: 	P(f_{101110011}(v),f_{101110011}(e))	\=\elim\land_2(\ref{19}) \\
+	%
+	\lbl{21}\:	\exists z{\ } P(z,z)					\=\intro\exists(\ref{20}) \\
+	\]
+	\lbl{22}\:	(
+				P(f_{1}(e),f_{101}(e)) \land
+				P(f_{10}(e),f_{00}(e)) \land
+				P(f_{011}(e),f_{11}(e))
+				) \land \forall v \forall w (P(v, w) \imp (
+				P(f_{1}(v),f_{101}(w)) \land
+				P(f_{10}(v),f_{00}(w)) \land
+				P(f_{011}(v),f_{11}(w))
+				)) \imp \exists z{\ } P(z,z)			\=\intro\imp(1-21) \\
+\end{proofbox}
+\normalsize
+\end{landscape}
+
+\end{document}
