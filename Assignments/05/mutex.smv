@@ -2,8 +2,8 @@ MODULE main
 	VAR
 		flag : array 0..1 of boolean;
 		turn : {0,1};
-		p0 : process proc(0, 1, turn, flag);
-		p1 : process proc(1, 0, turn, flag);
+		p0 : process proc(0, turn, flag);
+		p1 : process proc(1, turn, flag);
 
 	ASSIGN
 		init(flag[0]) := FALSE;
@@ -11,39 +11,52 @@ MODULE main
 		init(turn) := 0;
 
 	--- safety
---	SPEC AG !( (p0.state = c) & (p1.state = c) )
+	SPEC AG !( (p0.state = c) & (p1.state = c) )
 
 	--- liveness
---	SPEC AG ( (p0.state = t) -> AF (p0.state = c) )
---	SPEC AG ( (p1.state = t) -> AF (p1.state = c) )
+	SPEC AG ( (p0.state = t) -> AF (p0.state = c) )
+	SPEC AG ( (p1.state = t) -> AF (p1.state = c) )
 
-MODULE proc(id, other-id, turn, flag)
+MODULE proc(id, turn, flag)
 	VAR
+		line : {1, 2, 3, 4, 5, 6, 7};
 		state : {n, t, c};
 
 	ASSIGN
-		init(state) := n;
-
-		next(turn) :=
+		init(line) := 1;
+		next(line) :=
 			case
-			--- if it isn't my turn, and the other is critical, make it my turn.
-				(turn != id) & (flag[other-id] != TRUE) : id;
-				TRUE : turn;
+				(line = 1) : 2;
+				(line = 2) & (turn != id) : 3;
+				(line = 2) : 5;
+				(line = 3) & (flag[1 - id]) : 1;
+				(line = 3) : 4;
+				(line = 4) : 5;
+				(line = 5) : 6;
+				(line = 6) : 7;
+				(line = 7) : 1;
+			esac;
+
+		init(state) := n;
+		next(state) :=
+			case
+				(line = 1) : t;
+				(line = 5) : c;
+				(line = 7) : n;
+				TRUE : state;
 			esac;
 
 		next(flag[id]) :=
 			case
-				FALSE : TRUE;
-				TRUE & (turn = id) : FALSE;
+				(line = 1) : TRUE;
+				(line = 6) : FALSE;
 				TRUE : flag[id];
 			esac;
 
-		next(state) :=
+		next(turn) :=
 			case
-				(state = t) & (turn = id) : c;
-				(turn != id) & (flag[other-id] != TRUE) : t;
-				(state = c) & (turn = id) : n;
-				TRUE : state;
+				(line = 4) & (turn != id) & (flag[1-id] = FALSE) : id;
+				TRUE : turn;
 			esac;
 
-	JUSTICE running
+	FAIRNESS running;

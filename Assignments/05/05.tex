@@ -87,35 +87,47 @@ the clauses of Definition 3.15 from page 211.}
 
 \subsection*{(d) \mdseries $\llbracket\phi_1 \land \phi_2\rrbracket =
 \llbracket\phi_1\rrbracket\cap\llbracket\phi_2\rrbracket$}
-We know, by clause $4$ that $\llbracket\phi_1\rrbracket$ and
-$\llbracket\phi_2\rrbracket$ are both non-empty sets iff.
-$\llbracket\phi_1 \land \phi_2\rrbracket$ is. That is, we could rewrite the
-expression as $(\llbracket\phi_1\rrbracket - \llbracket\neg\phi_2\rrbracket)
-\cup (\llbracket\phi_2\rrbracket - \llbracket\neg\phi_1\rrbracket)$, which is
-equivalent to the intersection of the two sets
-$\llbracket\phi_1\rrbracket\cap\llbracket\phi_2\rrbracket$ by the relative
-complement.
+% 4.	M, s |= φ1 ∧ φ2 iff. M, s |= φ1 and M, s |= φ2
+We know, by clause $4$ that ${\cal M}, s \models \llbracket\phi_1 \land
+\phi_2\rrbracket$ iff ${\cal M}, s \models \llbracket\phi_1\rrbracket$ and
+${\cal M}, s \models \llbracket\phi_2\rrbracket$. That is, the set of states
+$S$ of $\llbracket\phi_1 \land \phi_2\rrbracket$ must be in both of the
+latter, containing no more and no less than that. Hence $\llbracket\phi_1
+\land \phi_2\rrbracket$ is, by definition, the intersection of
+$\llbracket\phi_1\rrbracket$ and $\llbracket\phi_2\rrbracket$, and thereby
+$\llbracket\phi_1 \land \phi_2\rrbracket =
+\llbracket\phi_1\rrbracket\cap\llbracket\phi_2\rrbracket$.
 
 \subsection*{(e) \mdseries $\llbracket\phi_1 \lor \phi_2\rrbracket =
 \llbracket\phi_1\rrbracket\cup\llbracket\phi_2\rrbracket$}
-By clause $5$ we have that the set of paths $s \in S$ contains within it paths
-that satisfies $\phi_1$ or $\phi_2$, or even both. If none of them contain any
-paths, the union of the sets would yield the empty set $\emptyset$, satisfying
-$\llbracket\phi_1\rrbracket\cup\llbracket\phi_2\rrbracket$. If only $\phi_i$
-contains satisfactory paths, then so does the union. If both $\phi_1$ and
-$\phi_2$ contain satisfactory paths $S_1$ and $S_2$ respectively, then the
-union contains all such paths.
+% 5.	M, s | = φ1 ∨ φ2 iff. M, s |= φ1 or M, s |= φ2
+By clause $5$ we have that ${\cal M}, s \models \llbracket\phi_1\rrbracket$ or
+${\cal M}, s \models \llbracket\phi_2\rrbracket$. Since
+$\llbracket\phi_1\rrbracket \subseteq
+\llbracket\phi_1\rrbracket\cup\llbracket\phi_2\rrbracket$ and
+$\llbracket\phi_2\rrbracket \subseteq
+\llbracket\phi_1\rrbracket\cup\llbracket\phi_2\rrbracket$, and further that
+$\llbracket\phi_1\rrbracket\cup\llbracket\phi_2\rrbracket -
+\llbracket\phi_1\rrbracket = \llbracket\phi_2\rrbracket$ and
+$\llbracket\phi_1\rrbracket\cup\llbracket\phi_2\rrbracket -
+\llbracket\phi_2\rrbracket = \llbracket\phi_1\rrbracket$, conluding that
+$(\llbracket\phi_1\rrbracket\cup\llbracket\phi_2\rrbracket -
+\llbracket\phi_2\rrbracket) - \llbracket\phi_1\rrbracket = \emptyset$, we can
+rightfully conclude that $\llbracket\phi_1 \lor \phi_2\rrbracket =
+\llbracket\phi_1\rrbracket\cup\llbracket\phi_2\rrbracket$.
 
 \subsection*{(f) \mdseries $\llbracket\phi_1 \imp \phi_2\rrbracket =
 (S - \llbracket\phi_1\rrbracket)\cup\llbracket\phi_2\rrbracket$}
-Considering the rules of implication, namely that of preservation of truth, we
-see that by clause $6$ we get that the set of all paths contained within $S$
-removing $\llbracket\phi_1\rrbracket$ from it yields the set of paths for
-which $\phi_1$ is false, which preserves truth, and hence the implication
-holds. Likewise, whenever $\phi_2$ is true, truth has been preserved, and so
-the union of the previous set with that of paths contained within
-$\llbracket\phi_2\rrbracket$ satisfies the equivalence.
+% 6.	M, s |= φ1 → φ2 iff. M, s |≠ φ1 or M, s |= φ2
+We see that by clause $6$ we have that ${\cal M}, s \not\models \phi_1$ or
+${\cal M}, s \models \phi_2$. The former gives us $S -
+\llbracket\phi_1\rrbracket$, as this signifies the set of states $S$ for
+which $\phi_1$ does not hold. The latter gives us just that $\llbracket\phi_2
+\rrbracket$. And thus, forming the union of these gives us exactly that
+$\llbracket\phi_1 \imp \phi_2\rrbracket =
+(S - \llbracket\phi_1\rrbracket)\cup\llbracket\phi_2\rrbracket$.
 
+\newpage
 \section*{3.4.10 \mdseries Which of the following pairs of CTL formulas are
 equivalent? For those which are not, exhibit a model of one of the pair which
 is not a model of the other}
@@ -155,9 +167,8 @@ ${\cal M}, s \not\models AF{\ }\phi \lor AF{\ }\psi$.
 \section*{NuSMV \mdseries Attached assignment}
 % attached NuSMV assignment.
 \subsection*{Model}
-\lstinputlisting{mutex.smv}
+\lstinputlisting[basicstyle=\ttfamily\tiny]{mutex.smv}
 
-\newpage
 \subsection*{Specifications}
 I have specified safety by the condition that $\text{AG} \neg( (p_0.state = c)
 \land (p_1.state = c) )$, meaning that no where in the execution of the program
@@ -167,19 +178,17 @@ As for liveness I have that $\text{AG} ( (p_i.state = t) \imp \text{AF}
 (p_i.state = c) )$, meaning that for any process in its trying state will
 eventually reach its critical state.
 
-\subsection*{Counter-example traces}
-These are the counter-example traces.
-
-\subsubsection*{Safety}
+\newpage
+\subsection*{Safety trace}
 \lstinputlisting{safety-trace.out}
-As lines $21$ and $31$ of the trace shows, this did in fact occur; both
+As lines $42$ and $52$ of the trace shows, this did in fact occur; both
 processes entered their critical states.
 
 \newpage
-\subsubsection*{Liveness}
+\subsection*{Liveness trace}
 \lstinputlisting{liveness-trace.out}
-Examining the trace output, we see that on line $26$ the process $p_0$ enters
+Examining the trace output, we see that on line $40$ the process $p_0$ enters
 its trying state $t$, but did not reach its critical state as a consequence of
-the looped state as of line $23$, reinforced by the looped state at line $37$.
+the looped state path as of line $36$.
 
 \end{document}
