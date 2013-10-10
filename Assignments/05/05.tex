@@ -3,10 +3,19 @@
 \usepackage[utf8]{inputenc}
 \usepackage{a4wide}
 \usepackage{amsmath,amssymb}
+\usepackage{color}
 \usepackage{boxproof}
 \usepackage{daymonthyear}
 \usepackage{float} % for the H placement identifier
+\usepackage{listings}
 \usepackage{stmaryrd}
+
+%========== DEFINITIONS ==========%
+
+\definecolor{c_comment}{rgb}	{0.38, 0.62, 0.38}
+\definecolor{c_keyword}{rgb}	{0.10, 0.10, 0.81}
+\definecolor{c_identifier}{rgb}	{0.00, 0.00, 0.00}
+\definecolor{c_string}{rgb}		{0.50, 0.50, 0.50}
 
 %===== SETTINGS =====%
 
@@ -34,6 +43,19 @@
 \let\implies\to
 \def\KK{{\mathsf K}}
 \let\squashmuskip\relax
+
+\lstset
+{
+	numbers=left,
+	frame=single,
+	basicstyle=\footnotesize\ttfamily,
+	tabsize=4,
+	% colors
+	commentstyle=\color{c_comment},
+	keywordstyle=\color{c_keyword},
+	identifierstyle=\color{c_identifier},
+	stringstyle=\color{c_string},
+}
 
 %===== META DATA =====%
 
@@ -65,15 +87,34 @@ the clauses of Definition 3.15 from page 211.}
 
 \subsection*{(d) \mdseries $\llbracket\phi_1 \land \phi_2\rrbracket =
 \llbracket\phi_1\rrbracket\cap\llbracket\phi_2\rrbracket$}
-...
+We know, by clause $4$ that $\llbracket\phi_1\rrbracket$ and
+$\llbracket\phi_2\rrbracket$ are both non-empty sets iff.
+$\llbracket\phi_1 \land \phi_2\rrbracket$ is. That is, we could rewrite the
+expression as $(\llbracket\phi_1\rrbracket - \llbracket\neg\phi_2\rrbracket)
+\cup (\llbracket\phi_2\rrbracket - \llbracket\neg\phi_1\rrbracket)$, which is
+equivalent to the intersection of the two sets
+$\llbracket\phi_1\rrbracket\cap\llbracket\phi_2\rrbracket$ by the relative
+complement.
 
 \subsection*{(e) \mdseries $\llbracket\phi_1 \lor \phi_2\rrbracket =
 \llbracket\phi_1\rrbracket\cup\llbracket\phi_2\rrbracket$}
-...
+By clause $5$ we have that the set of paths $s \in S$ contains within it paths
+that satisfies $\phi_1$ or $\phi_2$, or even both. If none of them contain any
+paths, the union of the sets would yield the empty set $\emptyset$, satisfying
+$\llbracket\phi_1\rrbracket\cup\llbracket\phi_2\rrbracket$. If only $\phi_i$
+contains satisfactory paths, then so does the union. If both $\phi_1$ and
+$\phi_2$ contain satisfactory paths $S_1$ and $S_2$ respectively, then the
+union contains all such paths.
 
 \subsection*{(f) \mdseries $\llbracket\phi_1 \imp \phi_2\rrbracket =
 (S - \llbracket\phi_1\rrbracket)\cup\llbracket\phi_2\rrbracket$}
-...
+Considering the rules of implication, namely that of preservation of truth, we
+see that by clause $6$ we get that the set of all paths contained within $S$
+removing $\llbracket\phi_1\rrbracket$ from it yields the set of paths for
+which $\phi_1$ is false, which preserves truth, and hence the implication
+holds. Likewise, whenever $\phi_2$ is true, truth has been preserved, and so
+the union of the previous set with that of paths contained within
+$\llbracket\phi_2\rrbracket$ satisfies the equivalence.
 
 \section*{3.4.10 \mdseries Which of the following pairs of CTL formulas are
 equivalent? For those which are not, exhibit a model of one of the pair which
@@ -81,18 +122,64 @@ is not a model of the other}
 % 3.4: 10 (a-c)
 
 \subsection*{(a) \mdseries $\text{EF}{\ }\phi$ and $\text{EG}{\ }\phi$}
-...
+For a model ${\cal M} = (S,\imp,L)$ consisting of the transitions $s \imp t$,
+$s \imp u$ and $t \imp u$, in which only $\phi$ only holds for $t$. We see
+that ${\cal M}, s \models \text{EF}{\ }\phi$ holds, as we can get from the
+start node $s$ to $t$ for which $\phi$ holds. However, from $t$ we could go
+to $u$ for which $\phi$ doesn't hold, hence
+${\cal M}, s \not\models \text{EG}{\ }\phi$.
 
 \subsection*{(b) \mdseries $\text{EF}{\ }\phi \lor \text{EF}{\ }\psi$ and
 $\text{EF}{\ }(\phi \lor \psi)$}
-...
+Under the assumption that $\text{EF}{\ }\phi \lor \text{EF}{\ }\psi$ holds, it
+then follows that there exists a future state for which either $\phi$ or
+$\psi$ holds. That is, by clause $5$ definition 3.15, we have that
+${\cal M}, s \models \text{EF}{\ }\phi$ or
+${\cal M}, s \models \text{EF}{\ }\psi$. By expanding $\phi$ of clause $12$
+for ${\cal M}, s \models \text{EF}{\ }(\phi \lor \psi)$ we get just that;
+$\phi \lor \psi$ must hold at some point in the future, which is satisfied.
 
 \subsection*{(c) \mdseries $\text{AF}{\ }\phi \lor \text{AF}{\ }\psi$ and
 $\text{AF}{\ }(\phi \lor \psi)$}
-...
+Consider a model ${\cal M}, s \models (S,\imp,L)$ which includes three states
+$s$, $t$ and $u$, for which $s$ none of $\phi$ or $\psi$ hold, that is $L(s)
+= \emptyset$. For $t$ and $u$, $\phi$ and $\psi$ holds respectively, that is
+$L(t) = \phi$ and $L(u) = \psi$. Given the transitions $s \imp t$ and $s \imp
+u$ we can confirm that ${\cal M}, s \models AF{\ }\phi \lor AF{\ }\psi$, as
+well as ${\cal M}, s \models AF{\ }(\phi \lor \psi)$. However, if we add the
+transitions $t \imp t$ and $u \imp u$, we see that we can go to either of
+these, and stay there forever showing that
+${\cal M}, s \not\models AF{\ }\phi \lor AF{\ }\psi$.
 
+\newpage
 \section*{NuSMV \mdseries Attached assignment}
 % attached NuSMV assignment.
-...
+\subsection*{Model}
+\lstinputlisting{mutex.smv}
+
+\newpage
+\subsection*{Specifications}
+I have specified safety by the condition that $\text{AG} \neg( (p_0.state = c)
+\land (p_1.state = c) )$, meaning that no where in the execution of the program
+will a process enter its critical section if the other is.
+
+As for liveness I have that $\text{AG} ( (p_i.state = t) \imp \text{AF}
+(p_i.state = c) )$, meaning that for any process in its trying state will
+eventually reach its critical state.
+
+\subsection*{Counter-example traces}
+These are the counter-example traces.
+
+\subsubsection*{Safety}
+\lstinputlisting{safety-trace.out}
+As lines $21$ and $31$ of the trace shows, this did in fact occur; both
+processes entered their critical states.
+
+\newpage
+\subsubsection*{Liveness}
+\lstinputlisting{liveness-trace.out}
+Examining the trace output, we see that on line $26$ the process $p_0$ enters
+its trying state $t$, but did not reach its critical state as a consequence of
+the looped state as of line $23$, reinforced by the looped state at line $37$.
 
 \end{document}

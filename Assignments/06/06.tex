@@ -57,9 +57,45 @@ Assignment 6
 
 \maketitle
 
-\section*{x.x.x \mdseries ...}
+% For testing "old" knowledge:
 
-\subsection*{(x) \mdseries ...}
+\section*{2.3.13 \mdseries By natural deduction, show the validity of;}
+% 2.3:13 (b)
+\subsection*{(b) \mdseries $\forall x{\ }P(a,x,x), \forall x{\ }\forall y{\ }
+\forall z{\ }( P(x,y,z) \imp P(f(x),y,f(z)) ) \vdash P(f(a),a,f(a))$}
+\begin{proofbox}
+	\lbl{1} \:	\forall x{\ }P(a,x,x)					\=\mbox{premise} \\
+	\lbl{2} \:	\forall x{\ }
+				\forall y{\ }
+				\forall z{\ }
+				( P(x,y,z) \imp P(f(x),y,f(z)) )		\=\mbox{premise} \\
+\[
+x_0	\lbl{3} \:	\forall x_0{\ }
+				\forall y{\ }
+				\forall z{\ }
+				( P(x_0,y,z) \imp P(f(x_0),y,f(z)) )	\=\elim\forall_{x_0}(\ref{2}) \\
+\]
+	\lbl{.} \:	P(f(a),a,f(a))							\=\mbox{...} \\
+\end{proofbox}
+
+\section*{3.4.11 \mdseries ...}
+% 3.4:11
+\subsection*{(a) \mdseries ...}
+...
+
+\section*{CTL Model Algorithm \mdseries Supplementary CTL SAT algorithm
+exercise}
+% Exercise 3.7: 4 (only show the first half,that [[AF \phi]] is the least
+% fixpoint of F.)
+...
+
+% BDDs:
+\section*{6.5.5 \mdseries ...}
+% 6.5:5
+...
+
+\section*{6.7.9 \mdseries ...}
+% 6.7:9
 ...
 
 \end{document}
