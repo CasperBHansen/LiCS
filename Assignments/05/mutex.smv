@@ -1,0 +1,49 @@
+MODULE main
+	VAR
+		flag : array 0..1 of boolean;
+		turn : {0,1};
+		p0 : process proc(0, 1, turn, flag);
+		p1 : process proc(1, 0, turn, flag);
+
+	ASSIGN
+		init(flag[0]) := FALSE;
+		init(flag[1]) := FALSE;
+		init(turn) := 0;
+
+	--- safety
+--	SPEC AG !( (p0.state = c) & (p1.state = c) )
+
+	--- liveness
+--	SPEC AG ( (p0.state = t) -> AF (p0.state = c) )
+--	SPEC AG ( (p1.state = t) -> AF (p1.state = c) )
+
+MODULE proc(id, other-id, turn, flag)
+	VAR
+		state : {n, t, c};
+
+	ASSIGN
+		init(state) := n;
+
+		next(turn) :=
+			case
+			--- if it isn't my turn, and the other is critical, make it my turn.
+				(turn != id) & (flag[other-id] != TRUE) : id;
+				TRUE : turn;
+			esac;
+
+		next(flag[id]) :=
+			case
+				FALSE : TRUE;
+				TRUE & (turn = id) : FALSE;
+				TRUE : flag[id];
+			esac;
+
+		next(state) :=
+			case
+				(state = t) & (turn = id) : c;
+				(turn != id) & (flag[other-id] != TRUE) : t;
+				(state = c) & (turn = id) : n;
+				TRUE : state;
+			esac;
+
+	JUSTICE running
