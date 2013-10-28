@@ -1,6 +1,28 @@
 \section{LTL (linear-time temporal logic)}
+
+\[
+	\pi \models \phi \text{\tt D} \psi
+	\quad \text{iff.} \quad
+	\forall j \geq 0.(\pi^j \models \phi \imp
+	[\exists k \geq 0.\exists l > 0.(\pi^{j+k} \models \psi)
+	\land (\pi^{j+k+l} \models \psi)])
+\]
+
 \subsection*{Question 4.1}
-\subsection*{Question 4.2}
+\subsection*{Question 4.2 \mdseries Using the {\it semantics} of {\tt D}
+defined above, prove that \[(\phi \land \psi)\text{\tt D}\eta \equiv
+(\phi\text{\tt D}\eta) \land (\psi\text{\tt D}\eta)\]
+Arguments not based on the semantics will not receive points}
+
+By the semantics defined for {\tt D} we have, for $(\phi \land \psi)
+\text{\tt D} \eta$, that $\eta$ is satisfied twice for some $k \geq 0$ and
+some $l > 0$. Further we have that $\phi$ is satisfied for some $j \geq 0$,
+since $\phi \land \psi$ is satisfied, reasoned by $\phi \land \psi \imp \phi$.
+The above reasoning is the equivalent of stating that $\phi \text{\tt D}
+\eta$. The argument that is also satisfied $\psi \text{\tt D} \eta$ is
+symmetric. Since both hold, we can conclude that $(\phi \land \psi)
+\text{\tt D}\eta \equiv (\phi\text{\tt D}\eta) \land (\psi\text{\tt D}\eta)$.
+
 \subsection*{Question 4.3}
 \subsubsection*{(a) \mdseries ...}
 \subsubsection*{(b) \mdseries ...}
