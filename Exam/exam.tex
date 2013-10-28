@@ -1,10 +1,11 @@
-\documentclass[11pt,a4paper]{article}
+\documentclass[10pt,a4paper]{article}
 
 \usepackage[utf8]{inputenc}
 \usepackage{a4wide}
 \usepackage{amsmath,amssymb}
 \usepackage{boxproof}
 \usepackage{daymonthyear}
+\usepackage{enumerate}
 \usepackage{float} % for the H placement identifier
 \usepackage{stmaryrd}
 
@@ -57,14 +58,113 @@
 
 \maketitle
 
-\section*{x.x.x \mdseries ...}
-\subsection*{(x) \mdseries ...}
-\begin{proofbox}
-	\lbl{1} \: p \land q 				\=\mbox{premise} \\
-	\lbl{2} \: p 						\=\elim\land_1(\ref{1}) \\
-	\lbl{3} \: q 						\=\elim\land_2(\ref{1}) \\
-	\lbl{4} \: q \land p 				\=\intro\land(\ref{2},\ref{3})
-\end{proofbox}
+\section{Propositional logic}
+\subsection*{Question 1.1}
+This subquestion concerns the use of {\it proof theoretic} argument in
+propositional logic, i.e. arguments relating to natural deduction. Note that
+you may {\it only} use the rules of page 27 in Huth+Ryan. You are not allowed
+to shortcut your formal proofs with equivalences.
+\subsubsection*{(a) \mdseries Use natural deduction for propositional logic
+(i.e. the deduction system on page 27 of Huth+Ryan) to show that the following
+sequents are valid.}
 
+\begin{enumerate}[i]
+	\item
+	{
+	$\vdash \neg\neg p \land q \imp p \lor r$
+	\begin{proofbox}
+		\lbl{1} \: \dots 								\=\mbox{assumption} \\
+	\end{proofbox}
+	}
+	\item
+	{
+	$\neg q \imp \neg p \vdash p \imp q$
+	\begin{proofbox}
+		\lbl{1} \: \neg q \imp \neg p 					\=\mbox{assumption} \\
+		\lbl{2} \: \neg q \imp \neg p 					\=\mbox{assumption} \\
+	\end{proofbox}
+	}
+\end{enumerate}
+
+\subsubsection*{(b) \mdseries A deduction rule (without boxes) of form
+\[\frac{\phi_1\quad\phi_2\quad\dots\quad\phi_n}{\psi}\text{\scriptsize R}\] is
+called {\it derivable} if the conclusion $\psi$ can be derived from the
+premises $\phi_1,\dots,\phi_n$ without using rule R. In other words, if you
+can provide a proof schema for $\phi_1,\phi_2,\dots,\phi_n\vdash\psi$, using
+just the rules of natural deduction for propositional logic, then rule R is
+derivable.
+\newline\indent
+As an example, the rule \[\frac{\phi\imp\neg\phi}{\neg\phi}\text{\scriptsize NREL}\] is
+derivable by the proof schema
+\begin{proofbox}
+	\lbl{1}	\: \phi \imp \neg\phi 						\=\mbox{premise} \\
+\[
+	\lbl{2}	\: \phi 									\=\mbox{assumption} \\
+	\lbl{3}	\: \neg\phi 								\=\elim\imp(\ref{1}, \ref{2}) \\
+	\lbl{4}	\: \phi \imp \neg\phi 						\=\elim\neg(\ref{2}, \ref{3}) \\
+\]
+	\lbl{5}	\: \phi \imp \neg\phi 						\=\intro\neg(2, 4) \\
+\end{proofbox}
+Show that the following rules are derivable.}
+
+\begin{enumerate}[i]
+	\item
+	{
+	$\frac{\phi}{\psi \imp \phi}\text{\scriptsize WEAK}$
+	\begin{proofbox}
+		\lbl{1} \: \dots 								\=\mbox{assumption} \\
+	\end{proofbox}
+	}
+	\item
+	{
+	$\frac{\phi \lor \psi \quad \neg\psi}{\phi}\text{\scriptsize WEAK}$
+	\begin{proofbox}
+		\lbl{1} \: \dots 								\=\mbox{assumption} \\
+	\end{proofbox}
+	}
+\end{enumerate}
+
+\section{The SAT solver}
+\subsection*{Question 2.1}
+\subsubsection*{(a) \mdseries ...}
+\subsubsection*{(b) \mdseries ...}
+
+\subsection*{Question 2.2}
+\subsubsection*{(a) \mdseries ...}
+\subsubsection*{(b) \mdseries ...}
+\subsubsection*{(c) \mdseries ...}
+
+\subsection*{Question 2.3}
+
+\section{Predicate logic}
+\subsection*{Question 3.1}
+\subsubsection*{(a) \mdseries ...}
+\subsubsection*{(b) \mdseries ...}
+\subsubsection*{(c) \mdseries ...}
+
+\subsection*{Question 3.2}
+\subsubsection*{(a) \mdseries ...}
+\subsubsection*{(b) \mdseries ...}
+
+\section{LTL (linear-time temporal logic)}
+\subsection*{Question 4.1}
+\subsection*{Question 4.2}
+\subsection*{Question 4.3}
+\subsubsection*{(a) \mdseries ...}
+\subsubsection*{(b) \mdseries ...}
+
+\section{CTL (computation tree logic)}
+\subsection*{Question 5.1}
+\subsection*{Question 5.2}
+\subsection*{Question 5.3}
+\subsubsection*{(a) \mdseries ...}
+\subsubsection*{(b) \mdseries ...}
+\subsubsection*{(c) \mdseries ...}
+
+\section{Representation of Boolean formulas}
+\subsection*{Question 6.1}
+\subsection*{Question 6.2}
+\subsection*{Question 6.3}
+\subsection*{Question 6.4}
 
 \end{document}
