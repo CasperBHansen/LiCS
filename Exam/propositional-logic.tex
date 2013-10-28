@@ -104,7 +104,13 @@ Show that the following rules are derivable.}
 
 \newpage
 \subsection*{Question 1.2}
-\subsubsection*{(a) \mdseries For the following formulas, decide whether they are...}
+This subquestion concerns the use of {\it semantic} arguments in propositional
+logic, i.e. argument that have to do with truth tables and valuations, in some
+way.
+
+\subsubsection*{(a) \mdseries For the following formulas, decide whether they
+are {\it satisfiable} or not, and whether they are {\it valid} or not. Justify
+your answer.}
 \begin{enumerate}[i]
 	\item
 	{
@@ -125,28 +131,39 @@ Show that the following rules are derivable.}
 		{\tt T} & {\tt F} & {\tt T} & {\tt F} & {\tt T} & {\tt F} & {\tt T} & {\tt F} \\
 		{\tt T} & {\tt T} & {\tt F} & {\tt F} & {\tt T} & {\tt F} & {\tt T} & {\tt F} \\
 		{\tt T} & {\tt T} & {\tt T} & {\tt T} & {\tt F} & {\tt T} & {\tt T} & {\tt T} \\
-	\end{tabular}
-	
+	\end{tabular} \\\\
+	The formula is satisfiable, since at least one valuation of the formulas
+	constituent propositional atoms produce a true statement --- in this case
+	we have two. By definition 1.34\cite{HR}, we have that when all the
+	propositional atoms $p$, $q$ and $r$ are {\tt T}, so is the formula, and
+	hence $\models (\neg p \imp q \land r) \land (\neg (q \land r) \imp p)$.
 	}
 	
 	\item
 	{
-	$p \lor (p \imp p \lor r) \lor (\neg p \land (q \lor r))$ \\
+	$p \lor (p \imp p \lor r) \lor (\neg p \land (q \lor r))$ \\\\
+	We give the truth table for all valuations of the formula above. \\\\
 	\begin{tabular}{cccccc|c}
 		$p$ & $q$ & $r$ &
 		$q \lor r$ &
 		$p \lor (p \imp p \lor r)$ &
 		$\neg p \land (q \lor r)$ &
 		$p \lor (p \imp p \lor r) \lor (\neg p \land (q \lor r))$ \\ \hline
-		{\tt F} & {\tt F} & {\tt F} & {\tt ?} & {\tt ?} & {\tt ?} & {\tt ?} \\
-		{\tt F} & {\tt F} & {\tt T} & {\tt ?} & {\tt ?} & {\tt ?} & {\tt ?} \\
-		{\tt F} & {\tt T} & {\tt F} & {\tt ?} & {\tt ?} & {\tt ?} & {\tt ?} \\
-		{\tt F} & {\tt T} & {\tt T} & {\tt ?} & {\tt ?} & {\tt ?} & {\tt ?} \\
-		{\tt T} & {\tt F} & {\tt F} & {\tt ?} & {\tt ?} & {\tt ?} & {\tt ?} \\
-		{\tt T} & {\tt F} & {\tt T} & {\tt ?} & {\tt ?} & {\tt ?} & {\tt ?} \\
-		{\tt T} & {\tt T} & {\tt F} & {\tt ?} & {\tt ?} & {\tt ?} & {\tt ?} \\
-		{\tt T} & {\tt T} & {\tt T} & {\tt ?} & {\tt ?} & {\tt ?} & {\tt ?} \\
-	\end{tabular}
+		{\tt F} & {\tt F} & {\tt F} & {\tt F} & {\tt T} & {\tt F} & {\tt T} \\
+		{\tt F} & {\tt F} & {\tt T} & {\tt T} & {\tt T} & {\tt T} & {\tt T} \\
+		{\tt F} & {\tt T} & {\tt F} & {\tt T} & {\tt T} & {\tt T} & {\tt T} \\
+		{\tt F} & {\tt T} & {\tt T} & {\tt T} & {\tt T} & {\tt T} & {\tt T} \\
+		{\tt T} & {\tt F} & {\tt F} & {\tt F} & {\tt T} & {\tt F} & {\tt T} \\
+		{\tt T} & {\tt F} & {\tt T} & {\tt T} & {\tt T} & {\tt F} & {\tt T} \\
+		{\tt T} & {\tt T} & {\tt F} & {\tt T} & {\tt T} & {\tt F} & {\tt T} \\
+		{\tt T} & {\tt T} & {\tt T} & {\tt T} & {\tt T} & {\tt F} & {\tt T} \\
+	\end{tabular} \\\\
+	The formula is satisfiable, since at least one valuation of the formulas
+	constituent propositional atoms produce a true statement --- in this case
+	all valuations produce a true statement. By definition 1.34\cite{HR}, it
+	is trivial to see that since all valuations makes the formula true, so
+	follows the semantic entailment. That is, we have that $\models p \lor
+	(p \imp p \lor r) \lor (\neg p \land (q \lor r))$.
 	}
 \end{enumerate}
 
