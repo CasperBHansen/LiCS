@@ -162,6 +162,61 @@ Show that the following rules are derivable.}
 	}
 \end{enumerate}
 
+\newpage
+\subsection*{Question 1.2}
+\subsubsection*{(a) \mdseries For the following formulas, decide whether they are...}
+\begin{enumerate}[i]
+	\item
+	{
+	$(\neg p \imp q \land r) \land (\neg (q \land r) \imp p)$ \\\\
+	We give the truth table for all valuations of the formula above. \\\\
+	\begin{tabular}{ccccccc|c}
+		$p$ & $q$ & $r$ &
+		$q \land r$ &
+		$\neg (q \land r)$ &
+		$\neg p \imp q \land r$ &
+		$\neg (q \land r) \imp p$ &
+		$(\neg p \imp q \land r) \land (\neg (q \land r) \imp p)$ \\ \hline
+		{\tt F} & {\tt F} & {\tt F} & {\tt F} & {\tt T} & {\tt T} & {\tt F} & {\tt F} \\
+		{\tt F} & {\tt F} & {\tt T} & {\tt F} & {\tt T} & {\tt T} & {\tt F} & {\tt F} \\
+		{\tt F} & {\tt T} & {\tt F} & {\tt F} & {\tt T} & {\tt T} & {\tt F} & {\tt F} \\
+		{\tt F} & {\tt T} & {\tt T} & {\tt T} & {\tt F} & {\tt T} & {\tt T} & {\tt T} \\
+		{\tt T} & {\tt F} & {\tt F} & {\tt F} & {\tt T} & {\tt F} & {\tt T} & {\tt F} \\
+		{\tt T} & {\tt F} & {\tt T} & {\tt F} & {\tt T} & {\tt F} & {\tt T} & {\tt F} \\
+		{\tt T} & {\tt T} & {\tt F} & {\tt F} & {\tt T} & {\tt F} & {\tt T} & {\tt F} \\
+		{\tt T} & {\tt T} & {\tt T} & {\tt T} & {\tt F} & {\tt T} & {\tt T} & {\tt T} \\
+	\end{tabular}
+	
+	}
+	
+	\item
+	{
+	$p \lor (p \imp p \lor r) \lor (\neg p \land (q \lor r))$ \\
+	\begin{tabular}{cccccc|c}
+		$p$ & $q$ & $r$ &
+		$q \lor r$ &
+		$p \lor (p \imp p \lor r)$ &
+		$\neg p \land (q \lor r)$ &
+		$p \lor (p \imp p \lor r) \lor (\neg p \land (q \lor r))$ \\ \hline
+		{\tt F} & {\tt F} & {\tt F} & {\tt ?} & {\tt ?} & {\tt ?} & {\tt ?} \\
+		{\tt F} & {\tt F} & {\tt T} & {\tt ?} & {\tt ?} & {\tt ?} & {\tt ?} \\
+		{\tt F} & {\tt T} & {\tt F} & {\tt ?} & {\tt ?} & {\tt ?} & {\tt ?} \\
+		{\tt F} & {\tt T} & {\tt T} & {\tt ?} & {\tt ?} & {\tt ?} & {\tt ?} \\
+		{\tt T} & {\tt F} & {\tt F} & {\tt ?} & {\tt ?} & {\tt ?} & {\tt ?} \\
+		{\tt T} & {\tt F} & {\tt T} & {\tt ?} & {\tt ?} & {\tt ?} & {\tt ?} \\
+		{\tt T} & {\tt T} & {\tt F} & {\tt ?} & {\tt ?} & {\tt ?} & {\tt ?} \\
+		{\tt T} & {\tt T} & {\tt T} & {\tt ?} & {\tt ?} & {\tt ?} & {\tt ?} \\
+	\end{tabular}
+	}
+\end{enumerate}
+
+\subsubsection*{(b) \mdseries Show that \[\models \left((\phi_1 \land \phi_2
+\land \dots \land \phi_n) \imp \psi \right) \imp \left( (\phi_1 \imp \psi)
+\land (\phi_2 \imp \psi) \land \dots \land (\phi_n \imp \psi) \right)\] does
+{\it not} hold in general, by exhibiting a concrete counterexample formula
+$\phi$ and valuation $\cal L$ showing $\phi$ is not valid.} 
+Supposed that $\phi$ is given by the formula $\dots$, then...
+
 \section{The SAT solver}
 \subsection*{Question 2.1}
 \subsubsection*{(a) \mdseries ...}
