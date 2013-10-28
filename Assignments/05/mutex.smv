@@ -11,51 +11,46 @@ MODULE main
 		init(turn) := 0;
 
 	--- safety
-	SPEC AG !( (p0.state = c) & (p1.state = c) )
+--	SPEC AG !( (p0.state = c) & (p1.state = c) )
 
 	--- liveness
 	SPEC AG ( (p0.state = t) -> AF (p0.state = c) )
-	SPEC AG ( (p1.state = t) -> AF (p1.state = c) )
+--	SPEC AG ( (p1.state = t) -> AF (p1.state = c) )
 
 MODULE proc(id, turn, flag)
 	VAR
-		line : {1, 2, 3, 4, 5, 6, 7};
+		line : {0, 1, 2, 3, 4, 5, 6};
 		state : {n, t, c};
 
 	ASSIGN
-		init(line) := 1;
+		init(line) := 0;
 		next(line) :=
 			case
-				(line = 1) : 2;
-				(line = 2) & (turn != id) : 3;
-				(line = 2) : 5;
-				(line = 3) & (flag[1 - id]) : 1;
-				(line = 3) : 4;
-				(line = 4) : 5;
-				(line = 5) : 6;
-				(line = 6) : 7;
-				(line = 7) : 1;
+				(line = 1) & (turn = id) : 4;
+				(line = 2) & (flag[1 - id]) : 2;
+				(line = 3) : 1;	-- loop-back
+				TRUE : (line + 1) mod 7;
 			esac;
 
 		init(state) := n;
 		next(state) :=
 			case
-				(line = 1) : t;
-				(line = 5) : c;
-				(line = 7) : n;
+				(line = 0) : t;
+				(line = 4) : c;
+				(line = 6) : n;
 				TRUE : state;
 			esac;
 
 		next(flag[id]) :=
 			case
-				(line = 1) : TRUE;
-				(line = 6) : FALSE;
+				(line = 0) : TRUE;
+				(line = 5) : FALSE;
 				TRUE : flag[id];
 			esac;
 
 		next(turn) :=
 			case
-				(line = 4) & (turn != id) & (flag[1-id] = FALSE) : id;
+				(line = 3) : id;
 				TRUE : turn;
 			esac;
 

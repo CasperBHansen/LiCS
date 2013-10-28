@@ -88,43 +88,37 @@ the clauses of Definition 3.15 from page 211.}
 \subsection*{(d) \mdseries $\llbracket\phi_1 \land \phi_2\rrbracket =
 \llbracket\phi_1\rrbracket\cap\llbracket\phi_2\rrbracket$}
 % 4.	M, s |= φ1 ∧ φ2 iff. M, s |= φ1 and M, s |= φ2
-We know, by clause $4$ that ${\cal M}, s \models \llbracket\phi_1 \land
-\phi_2\rrbracket$ iff ${\cal M}, s \models \llbracket\phi_1\rrbracket$ and
-${\cal M}, s \models \llbracket\phi_2\rrbracket$. That is, the set of states
-$S$ of $\llbracket\phi_1 \land \phi_2\rrbracket$ must be in both of the
-latter, containing no more and no less than that. Hence $\llbracket\phi_1
-\land \phi_2\rrbracket$ is, by definition, the intersection of
-$\llbracket\phi_1\rrbracket$ and $\llbracket\phi_2\rrbracket$, and thereby
+We know, by clause $4$ that ${\cal M}, s \models \phi_1 \land \phi_2$ iff
+${\cal M}, s \models \phi_1$ and ${\cal M}, s \models \phi_2$. That is, the
+set of states for which $\phi_1 \land \phi_2$ holds must then contain both of
+the latter, but only states for which both of $\llbracket\phi_1\rrbracket$ and
+$\llbracket\phi_2\rrbracket$ hold. Hence
+$\llbracket\phi_1 \land \phi_2\rrbracket$ is, by definition, the intersection
+of $\llbracket\phi_1\rrbracket$ and $\llbracket\phi_2\rrbracket$, and thereby
 $\llbracket\phi_1 \land \phi_2\rrbracket =
 \llbracket\phi_1\rrbracket\cap\llbracket\phi_2\rrbracket$.
 
 \subsection*{(e) \mdseries $\llbracket\phi_1 \lor \phi_2\rrbracket =
 \llbracket\phi_1\rrbracket\cup\llbracket\phi_2\rrbracket$}
 % 5.	M, s | = φ1 ∨ φ2 iff. M, s |= φ1 or M, s |= φ2
-By clause $5$ we have that ${\cal M}, s \models \llbracket\phi_1\rrbracket$ or
-${\cal M}, s \models \llbracket\phi_2\rrbracket$. Since
-$\llbracket\phi_1\rrbracket \subseteq
-\llbracket\phi_1\rrbracket\cup\llbracket\phi_2\rrbracket$ and
-$\llbracket\phi_2\rrbracket \subseteq
-\llbracket\phi_1\rrbracket\cup\llbracket\phi_2\rrbracket$, and further that
-$\llbracket\phi_1\rrbracket\cup\llbracket\phi_2\rrbracket -
-\llbracket\phi_1\rrbracket = \llbracket\phi_2\rrbracket$ and
-$\llbracket\phi_1\rrbracket\cup\llbracket\phi_2\rrbracket -
-\llbracket\phi_2\rrbracket = \llbracket\phi_1\rrbracket$, conluding that
-$(\llbracket\phi_1\rrbracket\cup\llbracket\phi_2\rrbracket -
-\llbracket\phi_2\rrbracket) - \llbracket\phi_1\rrbracket = \emptyset$, we can
-rightfully conclude that $\llbracket\phi_1 \lor \phi_2\rrbracket =
-\llbracket\phi_1\rrbracket\cup\llbracket\phi_2\rrbracket$.
+By clause $5$ we have that ${\cal M}, s \models \phi_1$ or ${\cal M}, s
+\models \phi_2$. That is, any state contained within either of
+$\llbracket\phi_1\rrbracket$ or $\llbracket\phi_2\rrbracket$ satisfies the
+model. So, $\llbracket\phi_1\rrbracket$ and $\llbracket\phi_2\rrbracket$ are
+both subsets of satisfactory states. Since no other states satisfies the
+model, we can rightfully conclude that $\llbracket\phi_1 \lor \phi_2\rrbracket
+= \llbracket\phi_1\rrbracket\cup\llbracket\phi_2\rrbracket$.
 
 \subsection*{(f) \mdseries $\llbracket\phi_1 \imp \phi_2\rrbracket =
 (S - \llbracket\phi_1\rrbracket)\cup\llbracket\phi_2\rrbracket$}
 % 6.	M, s |= φ1 → φ2 iff. M, s |≠ φ1 or M, s |= φ2
 We see that by clause $6$ we have that ${\cal M}, s \not\models \phi_1$ or
 ${\cal M}, s \models \phi_2$. The former gives us $S -
-\llbracket\phi_1\rrbracket$, as this signifies the set of states $S$ for
-which $\phi_1$ does not hold. The latter gives us just that $\llbracket\phi_2
-\rrbracket$. And thus, forming the union of these gives us exactly that
-$\llbracket\phi_1 \imp \phi_2\rrbracket =
+\llbracket\phi_1\rrbracket$, as this signifies the set of states for which
+$\phi_1$ does not hold. The latter gives us simply $\llbracket\phi_2
+\rrbracket$. And thus, since just one of these expressions must hold, forming
+the union of these --- by the same {\it or}-argument as above --- gives us
+exactly that $\llbracket\phi_1 \imp \phi_2\rrbracket =
 (S - \llbracket\phi_1\rrbracket)\cup\llbracket\phi_2\rrbracket$.
 
 \newpage
@@ -184,11 +178,34 @@ eventually reach its critical state.
 As lines $42$ and $52$ of the trace shows, this did in fact occur; both
 processes entered their critical states.
 
-\newpage
+What happens is that $p_1$ starts running, while $p_0$ has yet to flag its
+desire to enter its critical section. The $p_1$ process runs to line $3$ and
+$p_0$ enters its trying state. At this point $p_1$ has yet to execute line $3$
+and as such $p_0$ is free to jump directly over the {\tt while}-loop, as it
+believes it is its turn. So $p_0$ moves on to line $4$, effectively entering
+its critical section. Now, $p_1$ executes line $3$, making it its turn, and so
+it checks the {\tt while} condition, and jumps to line $4$, also entering its
+critical section. And thus, we have a violation of {\it safety}.
+
 \subsection*{Liveness trace}
 \lstinputlisting{liveness-trace.out}
 Examining the trace output, we see that on line $40$ the process $p_0$ enters
 its trying state $t$, but did not reach its critical state as a consequence of
 the looped state path as of line $36$.
+
+What happens here is that $p_1$ starts running, entering its trying state by
+flagging its desire to enter its critical section on line $0$. It continues
+onwards to line $3$, as $turn \neq 1$ and $flag[0]$ is false. Here $p_0$
+starts running, entering its trying state on line $0$. Back in $p_1$ $turn$
+gets set to $1$, and $p_1$ loops back to check whether or not it is its turn.
+
+From here on out, we get into a loop of states; $p_0$ moves on to line $2$,
+and then $p_1$ moves on to line $4$ as it is its turn. Moving on, $p_1$ goes
+on to enter its critical section on line $5$, and on line $6$ it resets its
+flag to false, and loops back to line $0$, while $p_0$ goes to line $1$
+because $flag[1]$ is false. This produces a loop of states for which $p_0$
+never reaches its critical state, even though it did flag its desire to do so.
+
+The case of $p_1$ never reaching its critical state is symmetric to the above.
 
 \end{document}
