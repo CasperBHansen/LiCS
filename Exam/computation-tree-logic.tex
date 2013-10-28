@@ -1,7 +1,55 @@
 \section{CTL (computation tree logic)}
-\subsection*{Question 5.1}
+This part of the exam is about CTL, computation tree logic. For convenience
+we reproduce a 0-based CTL semantics here (as opposed to Huth+Ryan who use a
+1-based notation.) Let ${\cal M} = (S,\imp,L)$ be a model. Recall that
+$P_{\cal M}(s)$ is the set of paths in model ${\cal M}$ starting with state
+$s$, and that $\sigma[i]$ is the $i$th element (state) of path $\sigma$
+(0-indexed in the semantics below, 1-indexed in Huth+Ryan).
+
+{\bf 0-based CTL semantics:}
+\begin{align*}
+	{\cal M}, s &\models \top \\
+	{\cal M}, s &\not\models \bot \\
+	{\cal M}, s &\models p \qquad\Leftrightarrow\qquad p \in L(s) \\
+	{\cal M}, s &\models \neg\phi \qquad\Leftrightarrow\qquad
+		{\cal M}, s \not\models \phi \\
+	{\cal M}, s &\models \phi_1 \land \phi_2 \qquad\Leftrightarrow\qquad
+		{\cal M}, s \models \phi_1 \land {\cal M}, s \models \phi_2 \\
+	&\vdots
+\end{align*}
+You may use either the 0-based or 1-based semantics to answer this part of the
+exam, but be sure to clearly mark which one you use in your answer.
+
+\subsection*{Question 5.1 \mdseries Provide a single model ${\cal M}_1 =
+(S_1, \imp_1, L_1)$ and a state $s_1 \in S_1$ in this model such that
+${\cal M}_1, s_1 \models \text{\tt EXAG} p$ and ${\cal M}_1, s_1 \not\models
+\text{\tt AXEF} p$. That is, in your model ${\cal M}_1, s_1$ should satisfy
+the CTL formula $\text{\tt EXAG} p$ but $s_1$ must not satisfy
+$\text{\tt AXEF} p$. \newline\indent
+Show correctness of your answer by providing a description of ${\cal M}_1$
+with the CTL formulas and running this in NuSMV. Your answer must contain both
+the NuSMV description and the result of running you description.}
+...
+
 \subsection*{Question 5.2}
-\subsection*{Question 5.3}
-\subsubsection*{(a) \mdseries ...}
-\subsubsection*{(b) \mdseries ...}
+\subsection*{Question 5.3 \mdseries The Boolean function $g$ of 4 arguments
+is defined by \[g(p,q,p',q') = p \cdot \overline{q'} + \overline{p} \cdot q'\]
+where we follow the notation from representation of transistion functions from
+symbolic model checking, such that $x'$ (where $x$ is an atom) denotes the
+value of the next state.}
+\subsubsection*{(a) \mdseries Construct a model ${\cal M}_g =
+(S_g, \imp_g, L_g)$ such that $g$ represents the transition relation $\imp_g$
+of the model. You may assume that the set of atomic propositions is ${p, q}$,
+thus your model should have 4 states.}
+\subsubsection*{(b) \mdseries Implement the model ${\cal M}_g$ in NuSMV with
+all states as starting state. You may either use the 'stateful' or 'stateless'
+approach (see first lecture on NuSMV).\newline\indent
+[Hint: If you choose the stateless approach, then consider what the value of
+$p$ tells you about the next value of $q$. This can give you a one-line
+implementations of the next functions. You are welcome to use the template.}
+\begin{figure}[H]
+	\lstinputlisting{M_g.smv}
+	\label{code:M_g}
+	\caption{NuSMV code of the ${\cal M}_g$ model}
+\end{figure}
 \subsubsection*{(c) \mdseries ...}
