@@ -1,10 +1,192 @@
 \section{The SAT solver}
 \subsection*{Question 2.1}
 \subsubsection*{(a) \mdseries ...}
+Using the grammar, as defined on $\phi$, we write up the structural induction.
+\begin{enumerate}
+	\item $T(p) \models p$ and $T(\neg p) \models \neg p$
+	\item $T(\neg \phi) \models \neg (T(\phi))$
+	\item $T(\phi_1 \land \phi_1) \models T(\phi_1) \land T(\phi_2)$
+	iff. $\models \phi_1$ and $\models \phi_2$
+	\item $T(\phi_1 \uparrow \phi_1) \models \neg(\phi_1 \land \phi_2)$
+	iff. $\models \neg \phi_1$ and $\models \neg \phi_2$
+\end{enumerate}
+By the structural induction above, we see that $\phi \equiv T(\phi)$. Also,
+no conditions need be satisfied for $T(\cdot)$ to hold in which $\uparrow$
+occurs. Hence $T(\phi)$ does not contain the $\uparrow$ as a connective.
+
 \subsubsection*{(b) \mdseries ...}
 
 \subsection*{Question 2.2}
-\subsubsection*{(a) \mdseries ...}
+\subsubsection*{(a) \mdseries Create {\it forcing rules} for $\uparrow$.}
+\usetikzlibrary{arrows}
+\begin{figure}[H]
+	\center
+	\begin{multicols}{3}
+	\begin{tikzpicture}
+	[
+	align=center,
+	node/.style={},
+	]
+		% connective
+		\node[node] (cv) at 		( 0.0,  0.0 ) {\tt F};
+		\node[node] (cs) at 		( 0.0, -0.5 ) {$\uparrow$};
+		
+		% left-hand side
+		\node[node] (lv) at 		(-1.0, -1.0 ) {\tt T};
+		\node[node] (ls) at 		(-1.0, -1.5 ) {$\circ$};
+		
+		% right-hand side
+		\node[node] (rv) at 		( 1.0, -1.0 ) {\tt T};
+		\node[node] (rs) at 		( 1.0, -1.5 ) {$\circ$};
+		
+		\foreach \from/\to in {cs/ls,cs/rs} \draw[solid] (\from) -- (\to);
+		% \foreach \from/\to in {cv/lv,cv/rv} \draw[double] (\from) -- (\to);
+		
+	\end{tikzpicture}\\
+	When the connective node is {\tt F}, it forces both subnodes to become
+	{\tt T}.
+	
+	\vfill
+	\columnbreak
+	
+	\begin{tikzpicture}
+	[
+	align=center,
+	node/.style={},
+	]
+		% connective
+		\node[node] (cv) at 		( 0.0,  0.0 ) {\tt T};
+		\node[node] (cs) at 		( 0.0, -0.5 ) {$\uparrow$};
+		
+		% left-hand side
+		\node[node] (lv) at 		(-1.0, -1.0 ) {\tt F};
+		\node[node] (ls) at 		(-1.0, -1.5 ) {$\circ$};
+		
+		% right-hand side
+	%	\node[node] (rv) at 		( 1.0, -1.0 ) {\tt F};
+		\node[node] (rs) at 		( 1.0, -1.5 ) {$\circ$};
+		
+		\foreach \from/\to in {cs/ls,cs/rs} \draw[solid] (\from) -- (\to);
+	%	\foreach \from/\to in {cv/lv,cv/rv} \draw[double] (\from) -- (\to);
+		
+	\end{tikzpicture}\\
+	If either of the connectives subnodes are {\tt F}, it then forces the
+	node to become {\tt T}.
+	
+	\vfill
+	\columnbreak
+	
+	\begin{tikzpicture}
+	[
+	align=center,
+	node/.style={},
+	]
+		% connective
+		\node[node] (cv) at 		( 0.0,  0.0 ) {\tt T};
+		\node[node] (cs) at 		( 0.0, -0.5 ) {$\uparrow$};
+		
+		% left-hand side
+		\node[node] (lv) at 		(-1.0, -1.0 ) {\tt T};
+		\node[node] (ls) at 		(-1.0, -1.5 ) {$\circ$};
+		
+		% right-hand side
+		\node[node] (rv) at 		( 1.0, -1.0 ) {\tt F};
+		\node[node] (rs) at 		( 1.0, -1.5 ) {$\circ$};
+		
+		\foreach \from/\to in {cs/ls,cs/rs} \draw[solid] (\from) -- (\to);
+	%	\foreach \from/\to in {cv/lv,cv/rv} \draw[double] (\from) -- (\to);
+		
+	\end{tikzpicture}\\
+	If we know the connective node to be {\tt T}, and one of its subnodes is
+	also {\tt T}, then it forces the other to be {\tt F}.
+	
+	\end{multicols}
+	
+	\begin{multicols}{3}
+		
+	\begin{tikzpicture}
+	[
+	align=center,
+	node/.style={},
+	]
+		% connective
+		\node[node] (cv) at 		( 0.0,  0.0 ) {\tt F};
+		\node[node] (cs) at 		( 0.0, -0.5 ) {$\uparrow$};
+		
+		% left-hand side
+		\node[node] (lv) at 		(-1.0, -1.0 ) {\tt T};
+		\node[node] (ls) at 		(-1.0, -1.5 ) {$\circ$};
+		
+		% right-hand side
+		\node[node] (rv) at 		( 1.0, -1.0 ) {\tt T};
+		\node[node] (rs) at 		( 1.0, -1.5 ) {$\circ$};
+		
+		\foreach \from/\to in {cs/ls,cs/rs} \draw[solid] (\from) -- (\to);
+		% \foreach \from/\to in {cv/lv,cv/rv} \draw[double] (\from) -- (\to);
+		
+	\end{tikzpicture}\\
+	The opposite is true, that whenever its subnodes are both {\tt T}, then it
+	follows that the connective node must be {\tt F}.
+	
+	\vfill
+	\columnbreak
+		
+	\begin{tikzpicture}
+	[
+	align=center,
+	node/.style={},
+	]
+		% connective
+		\node[node] (cv) at 		( 0.0,  0.0 ) {\tt T};
+		\node[node] (cs) at 		( 0.0, -0.5 ) {$\uparrow$};
+		
+		% left-hand side
+	%	\node[node] (lv) at 		(-1.0, -1.0 ) {\tt F};
+		\node[node] (ls) at 		(-1.0, -1.5 ) {$\circ$};
+		
+		% right-hand side
+		\node[node] (rv) at 		( 1.0, -1.0 ) {\tt F};
+		\node[node] (rs) at 		( 1.0, -1.5 ) {$\circ$};
+		
+		\foreach \from/\to in {cs/ls,cs/rs} \draw[solid] (\from) -- (\to);
+	%	\foreach \from/\to in {cv/lv,cv/rv} \draw[double] (\from) -- (\to);
+		
+	\end{tikzpicture}\\
+	If either of the connectives subnodes are {\tt F}, it then forces the
+	node to become {\tt T}.
+	
+	\vfill
+	\columnbreak
+	
+	\begin{tikzpicture}
+	[
+	align=center,
+	node/.style={},
+	]
+		% connective
+		\node[node] (cv) at 		( 0.0,  0.0 ) {\tt T};
+		\node[node] (cs) at 		( 0.0, -0.5 ) {$\uparrow$};
+		
+		% left-hand side
+		\node[node] (lv) at 		(-1.0, -1.0 ) {\tt F};
+		\node[node] (ls) at 		(-1.0, -1.5 ) {$\circ$};
+		
+		% right-hand side
+		\node[node] (rv) at 		( 1.0, -1.0 ) {\tt T};
+		\node[node] (rs) at 		( 1.0, -1.5 ) {$\circ$};
+		
+		\foreach \from/\to in {cs/ls,cs/rs} \draw[solid] (\from) -- (\to);
+	%	\foreach \from/\to in {cv/lv,cv/rv} \draw[double] (\from) -- (\to);
+		
+	\end{tikzpicture}\\
+	If we know the connective node to be {\tt T}, and one of its subnodes is
+	also {\tt T}, then it forces the other to be {\tt F}.
+	
+	\end{multicols}
+	\label{fig:uparrow-forced-rules}
+	\caption{Forced rules for the $\uparrow$ connective}
+\end{figure}
+
 \subsubsection*{(b) \mdseries ...}
 \subsubsection*{(c) \mdseries ...}
 

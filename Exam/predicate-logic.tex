@@ -1,9 +1,37 @@
 \section{Predicate logic}
 \subsection*{Question 3.1}
-\subsubsection*{(a) \mdseries ...}
+\subsubsection*{(a) \mdseries Using natural deduction for predicate logic,
+prove the sequent $\phi \vdash \mu$, ie., that \[\exists v \forall w L(v,w)
+\vdash \forall x \forall y \exists z (L(z,x) \land L(z,y))\]}
+\begin{proofbox}
+	\lbl{1} \: \exists v \forall w L(v, w) 				\=\mbox{premise} \\
+\[
+x_0 \lbl{2} \: \=\mbox{\ }
+\[
+y_0 \lbl{3} \: \=\mbox{\ }
+\[
+z_0 \lbl{4} \: \forall w L(z_0, w) 				\=\mbox{assumption} \\
+	\lbl{5} \: L(z_0, x_0) 						\=\elim\forall_w(\ref{4}) \\
+	\lbl{6} \: L(z_0, y_0) 						\=\elim\forall_w(\ref{4}) \\
+	\lbl{7} \: L(z_0, x_0) \land L(z_0, y_0) 	\=\intro\land(\ref{5},\ref{6}) \\
+	\lbl{8} \: \exists z (L(z,x_0) \land L(z,y_0)) 	\=\intro\exists_z(7) \\
+\]
+	\lbl{9} \: \exists z (L(z,x_0) \land L(z,y_0)) 		\=\elim\exists(1, 4-8) \\
+\]
+	\lbl{10} \: \forall y \exists z (L(z,x_0) \land L(z,y)) 	\=\intro\forall_y(3-9) \\
+\]
+	\lbl{11} \: \forall x \forall y \exists z (L(z,x) \land L(z,y)) 	\=\intro\forall_x(2-10) \\
+\end{proofbox}
+
 \subsubsection*{(b) \mdseries ...}
 \subsubsection*{(c) \mdseries ...}
 
 \subsection*{Question 3.2}
 \subsubsection*{(a) \mdseries ...}
 \subsubsection*{(b) \mdseries ...}
+\begin{proofbox}
+\[
+x_0 \lbl{1} \: P(x_0) 							\=\mbox{assumption} \\
+\]
+	\lbl{.} \: \exists x (P(x) \imp \forall y P(y)) \=\exists\elim{...}
+\end{proofbox}
