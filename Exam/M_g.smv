@@ -1,0 +1,18 @@
+MODULE main
+VAR
+	p : boolean;
+	q : boolean;
+
+ASSIGN
+	next(p) :=
+		case
+			(p & !q) : TRUE;
+			TRUE : {FALSE,TRUE};
+		esac;
+
+	next(q) :=
+		case
+			(p & q) : FALSE;
+			(p & !q) : FALSE;
+			TRUE : {FALSE,TRUE};
+		esac;
