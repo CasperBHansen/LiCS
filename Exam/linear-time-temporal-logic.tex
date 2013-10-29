@@ -9,6 +9,14 @@
 \]
 
 \subsection*{Question 4.1}
+We define the LTL formula of the {\tt D} connective as such
+\begin{align*}
+	\text{\tt G}( \phi \imp \text{\tt F}\psi \land \text{\tt F}(\text{\tt X}\psi) )
+\end{align*}
+which states that in all future states from which $\phi$ holds, it follows
+that there exists a future state such that $\psi$ holds and there exists a
+future state for which the next $\psi$ holds.
+
 \subsection*{Question 4.2 \mdseries Using the {\it semantics} of {\tt D}
 defined above, prove that \[(\phi \land \psi)\text{\tt D}\eta \equiv
 (\phi\text{\tt D}\eta) \land (\psi\text{\tt D}\eta)\]
@@ -22,7 +30,3 @@ The above reasoning is the equivalent of stating that $\phi \text{\tt D}
 \eta$. The argument that is also satisfied $\psi \text{\tt D} \eta$ is
 symmetric. Since both hold, we can conclude that $(\phi \land \psi)
 \text{\tt D}\eta \equiv (\phi\text{\tt D}\eta) \land (\psi\text{\tt D}\eta)$.
-
-\subsection*{Question 4.3}
-\subsubsection*{(a) \mdseries ...}
-\subsubsection*{(b) \mdseries ...}

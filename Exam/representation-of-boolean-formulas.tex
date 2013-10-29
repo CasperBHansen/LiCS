@@ -1,6 +1,4 @@
 \section{Representation of Boolean formulas}
-\subsection*{Question 6.1}
-\subsection*{Question 6.2}
 \subsection*{Question 6.3 \mdseries Recall that for any Boolean formula $f$,
 \[ \forall x.f \eqdef f[0/x] \cdot f[1/x]
 \quad \text{and} \quad
@@ -13,8 +11,7 @@ Given the Boolean formula
 \[ g = (x_1 x_2 x_3 + x_3 x_4) \oplus (x_2 + x_4 + x_1 x_3) \]
 calculate the Boolean formula $\partial x_3.(\partial x_4.g)$. Simplify your
 answer as much as possible. You must supply a line of reasoning, but you do
-not need to convert into BDDs for this.
-}
+not need to convert into BDDs for this.}
 
 First, we calculate the derivative $\partial x_4.g$; \footnote{I was unable to
 find any definite answer on how to interpret when no operator is in-between
@@ -43,5 +40,3 @@ substituting into the equation from the last calculated derivative;
 	&= 1 \oplus 1 \\
 	&= 0
 \end{align*}
-
-\subsection*{Question 6.4}

@@ -50,6 +50,7 @@ sequents are valid.}
 	}
 \end{enumerate}
 
+\newpage
 \subsubsection*{(b) \mdseries A deduction rule (without boxes) of form
 \[\frac{\phi_1\quad\phi_2\quad\dots\quad\phi_n}{\psi}\text{\scriptsize R}\] is
 called {\it derivable} if the conclusion $\psi$ can be derived from the
@@ -205,11 +206,16 @@ $\phi_j$ to be {\tt T} makes it so.
 \normalsize
 For which the truth table entries of interest reveals that it does not hold.
 
-\begin{tabular}{ccc|c|c|c}
-	$\phi_i$ & $\phi_j$ & $\psi$
-	& $(\phi_1 \land \dots \land \phi_n) \imp \psi$
-	& $(\phi_1 \imp \psi) \land \dots \land (\phi_n \imp \psi)$
-	& $\star$ \\ \hline
-	{\tt F} & {\tt T} & {\tt F} & {\tt T} & {\tt F} & {\tt F} \\
-	{\tt T} & {\tt F} & {\tt F} & {\tt T} & {\tt F} & {\tt F} \\
-\end{tabular}
+\begin{figure}[H]
+	\center
+	\begin{tabular}{ccc|c|c|c}
+		$\phi_i$ & $\phi_j$ & $\psi$
+		& $(\phi_1 \land \dots \land \phi_n) \imp \psi$
+		& $(\phi_1 \imp \psi) \land \dots \land (\phi_n \imp \psi)$
+		& $\star$ \\ \hline
+		{\tt F} & {\tt T} & {\tt F} & {\tt T} & {\tt F} & {\tt F} \\
+		{\tt T} & {\tt F} & {\tt F} & {\tt T} & {\tt F} & {\tt F} \\
+	\end{tabular}
+	\label{table:star-truth-table}
+	\caption{The truth table of the $\star$ formula}
+\end{figure}
