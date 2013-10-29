@@ -19,15 +19,15 @@ sequents are valid.}
 		\lbl{3} \: q 							\=\elim\land_2(\ref{1}) \\
 		\lbl{4} \: p 							\=\elim{\neg\neg}(\ref{2}) \\
 	\(
-		\lbl{.} \: p 							\=\mbox{assumption} \\
-		\lbl{.} \: p \lor r						\=\intro\lor_1(\ref{?}) \\
+		\lbl{5} \: p 							\=\mbox{assumption} \\
+		\lbl{6} \: p \lor r						\=\intro\lor_1(\ref{5}) \\
 	\*
-		\lbl{.} \: r							\=\mbox{assumption} \\
-		\lbl{.} \: p \lor r						\=\intro\lor_2(\ref{?}) \\
+		\lbl{5} \: r							\=\mbox{assumption} \\
+		\lbl{6} \: p \lor r						\=\intro\lor_2(\ref{5}) \\
 	\)
-		\lbl{.} \: p \lor r 					\=\mbox{...} \\
+		\lbl{7} \: p \lor r 					\=\elim\lor(1, 5-6, 5-6) \\
 	\]
-		\lbl{.} \: (\neg\neg p \land q) \imp p \lor r 	\=\mbox{conclusion} \\
+		\lbl{8} \: (\neg\neg p \land q) \imp p \lor r 	\=\intro\imp(1-7) \\
 	\end{proofbox}
 	}
 	\item
@@ -167,9 +167,49 @@ your answer.}
 	}
 \end{enumerate}
 
+\newpage
 \subsubsection*{(b) \mdseries Show that \[\models \left((\phi_1 \land \phi_2
 \land \dots \land \phi_n) \imp \psi \right) \imp \left( (\phi_1 \imp \psi)
 \land (\phi_2 \imp \psi) \land \dots \land (\phi_n \imp \psi) \right)\] does
 {\it not} hold in general, by exhibiting a concrete counterexample formula
 $\phi$ and valuation $\cal L$ showing $\phi$ is not valid.} 
-Supposed that $\phi$ is given by the formula $\dots$, then...
+Suppose that the implication does not hold, then there exists a valuation,
+for which it evaluates to {\tt false}. For this to happen, we must have that
+the left-hand side of the expression ($(\phi_1 \land \dots \land \phi_n) \imp
+\psi$) evaluates to {\tt T}, while the right-hand side $(\phi_1 \imp \psi)
+\land \dots \land (\phi_n \imp \psi)$ must evaluate to {\tt F}.
+
+\begin{itemize}
+	\item For the left-hand side, at least one of its constituents $\phi$ must be
+{\tt F}. We choose $\phi_i$ to be {\tt F}.
+
+	\item For the right-hand side, chosing $\psi$ to be {\tt F} and another constituent
+$\phi_j$ to be {\tt T} makes it so.
+\end{itemize}
+
+\noindent We arrive at a formula $\phi$ that reads
+\scriptsize
+\begin{align*}
+	\star = 
+	(
+		(\phi_1 \land \dots \land \phi_i \land \dots \land \phi_j \land \dots \land \phi_n) \imp \psi
+	)
+	\imp
+	(
+		(\phi_1 \imp \psi) \land \dots \land
+		(\phi_i \imp \psi) \land \dots \land
+		(\phi_j \imp \psi) \land \dots \land
+		(\phi_n \imp \psi)
+	)
+\end{align*}
+\normalsize
+For which the truth table entries of interest reveals that it does not hold.
+
+\begin{tabular}{ccc|c|c|c}
+	$\phi_i$ & $\phi_j$ & $\psi$
+	& $(\phi_1 \land \dots \land \phi_n) \imp \psi$
+	& $(\phi_1 \imp \psi) \land \dots \land (\phi_n \imp \psi)$
+	& $\star$ \\ \hline
+	{\tt F} & {\tt T} & {\tt F} & {\tt T} & {\tt F} & {\tt F} \\
+	{\tt T} & {\tt F} & {\tt F} & {\tt T} & {\tt F} & {\tt F} \\
+\end{tabular}

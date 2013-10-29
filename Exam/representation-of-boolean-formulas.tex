@@ -1,5 +1,47 @@
 \section{Representation of Boolean formulas}
 \subsection*{Question 6.1}
 \subsection*{Question 6.2}
-\subsection*{Question 6.3}
+\subsection*{Question 6.3 \mdseries Recall that for any Boolean formula $f$,
+\[ \forall x.f \eqdef f[0/x] \cdot f[1/x]
+\quad \text{and} \quad
+\exists x.f \eqdef f[0/x] + f[1/x] \]
+Similar to these we can also define the {\it Boolean derivative} ($\partial$)
+of $f$ (normally written as $\frac{\partial f}{\partial x}$, but we will here
+use a shorter version) as
+\[ \partial x.f \eqdef f[0/x] \oplus f[1/x] \]
+Given the Boolean formula
+\[ g = (x_1 x_2 x_3 + x_3 x_4) \oplus (x_2 + x_4 + x_1 x_3) \]
+calculate the Boolean formula $\partial x_3.(\partial x_4.g)$. Simplify your
+answer as much as possible. You must supply a line of reasoning, but you do
+not need to convert into BDDs for this.
+}
+
+First, we calculate the derivative $\partial x_4.g$; \footnote{I was unable to
+find any definite answer on how to interpret when no operator is in-between
+two boolean variables. I'm assuming that it is an implicit $\cdot$-operation
+($\land$).}
+\begin{align*}
+	\partial x_4.g &=
+	(x_1 x_2 x_3 + x_3 (0 \oplus 1))
+	\oplus
+	(x_2 + (0 \oplus 1) + x_1 x_3) \\
+	&=
+	(x_1 x_2 x_3 + x_3 1)
+	\oplus
+	(x_2 + 1 + x_1 x_3) \\
+	&=
+	(x_1 x_2 x_3 + x_3)
+	\oplus 1
+\end{align*}
+And then we calculate derivate of $\partial x_3.(\partial x_4.g)$, by
+substituting into the equation from the last calculated derivative;
+\begin{align*}
+	\partial x_3.(\partial x_4.g)
+	&= \partial x_3.( (x_1 x_2 x_3 + x_3) \oplus 1 ) \\
+	&= (x_1 x_2 (0 \oplus 1) + (0 \oplus 1) ) \oplus 1 \\
+	&= (x_1 x_2 1 + 1) \oplus 1 \\
+	&= 1 \oplus 1 \\
+	&= 0
+\end{align*}
+
 \subsection*{Question 6.4}
